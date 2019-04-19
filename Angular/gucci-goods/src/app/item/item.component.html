@@ -1,0 +1,34 @@
+<app-search></app-search>
+<div id="border" class="clearfix">
+  <h2>{{item.name}}</h2>
+  <div class="clearfix" id="row">
+    <img id="item-pic" src="{{item.image}}" />
+    <h3>Price:</h3>
+    <p>${{item.cost}}</p>
+    <div id="form">
+      <p>Quantity: </p><input id="quantity" type="text" [(ngModel)]="quantity"/>
+      <input id="buy-button" type="submit" value="Buy Now" (click)="buyItem()"/>
+    </div>
+    
+  </div>
+  <h4>Item Description:</h4>
+  <p>{{item.item_description}}</p>
+
+  <br>
+  <h4>Tags:</h4>
+  <p>{{item.tags}}</p>
+
+  <h4>Item Reviews:</h4>
+  <ul>
+    <li *ngFor = "let review of getItemReviews">
+      Anonymous wrote:  {{review.review_description}}
+    </li>
+  </ul>
+  <input type="text" placeholder="Write a review here" [(ngModel)]= "ItemReview" (keyup.enter)="postReview()"/><br>
+  <!-- <textarea placeholder="Write a review here" [(ngModel)]= "ItemReview"></textarea> -->
+  <input id="buy-button" type="submit" value="Post Review" (click) = "postReview()"/>
+  <p id="seller-link" (click)="getSellerProfile()">Visit seller profile</p>
+  <!-- <p>{{item.item_description}}</p> -->
+
+
+</div>

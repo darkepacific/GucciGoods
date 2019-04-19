@@ -1,0 +1,30 @@
+<ng-container *ngIf="!registered; else goLogin">
+  <img id="logo" src="/assets/GG_Logo.png"/>
+  <h2>Register</h2>
+  <div id="register">
+    <input type="text" placeholder="username" [(ngModel)]="username"/>
+    <input type="text" placeholder="password" [(ngModel)]="password"/>
+    <input type="text" placeholder="first name" [(ngModel)]="firstname"/>
+    <input type="text" placeholder="last name" [(ngModel)]="lastname"/>
+    <input type="text" placeholder="phone" [(ngModel)]="phone"/>
+    <input type="text" placeholder="email" [(ngModel)]="email"/>
+    <select [(ngModel)]="country">
+      <option value="" disabled selected>Location</option>
+      <option value="USA" selected>USA</option>
+      <option value="UK" selected>UK</option>
+      <option value="Japan" selected>China</option>
+      <option value="Japan" selected>Japan</option>
+      <option value="Japan" selected>Spain</option>
+    </select>
+    <input id="register-button" type="submit" value="register" (click)="register()" />
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+</ng-container>
+
+<ng-template #goLogin>
+  <h2>Registration complete! Please Sign in</h2>
+</ng-template>

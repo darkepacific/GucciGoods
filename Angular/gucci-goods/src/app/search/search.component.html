@@ -1,0 +1,19 @@
+<form id="search-form" autocomplete="off" action="search" method="GET">
+  <div class="autocomplete">
+    <!--<input id= "myInput" type="text" placeholder="Search.." name="search">-->
+
+    
+    <ng2-completer [(ngModel)]="query" name="query" [datasource]="commonItems" [minSearchLength]="1" [placeholder]="'Search...'" 
+    [textNoResults]="'No Suggestions Found.'" [maxChars]="64" [selectOnClick]="'true'" (keyup.enter)="search()"> 
+    
+    </ng2-completer>
+    <div>
+      <button type="submit" class="submit" (click)="search()"><i class="fa fa-search"></i></button>
+    </div>
+
+  </div>
+</form>
+
+<!--
+<button type="submit" class="submit" (click)="printStored()"></button>
+-->

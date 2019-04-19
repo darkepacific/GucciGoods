@@ -1,0 +1,106 @@
+#info-row {
+    width: 50%;
+    margin-top: 5%;
+    width: 100%;
+    /* margin-right: auto;
+    margin-left: auto; */
+}
+:host {
+    padding-right: 20%;
+    padding-left: 20%;
+    display: block;
+}
+#name {
+    margin-top: 5%;
+    color: darkolivegreen;
+}
+#avatar {
+    width: 100%;
+    float: left;
+    margin-right: 5%;
+    border-radius: 5px;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    margin-right: 2%;
+    margin-bottom: 0;
+    float: left;
+    font-size: 1.3em;
+    /* margin-top: 3%; */
+    color: grey;
+}
+
+.buttons {
+    line-height: 1px;
+    font-size: 0.7em;
+}
+
+#loc-input {
+    float: left;
+}
+#loc-btn-1 {
+    float: left;
+    clear: left;
+}
+#loc-btn-2 {
+    float: left;
+}
+#email-div {
+    float: left;
+    width: 33%;
+}
+
+#location-div {
+    overflow: auto;
+    margin-bottom: 10%;
+} 
+
+#phone-div {
+    float: left;
+    width: 33%;
+}
+
+#description-div {
+    float: left;
+    overflow: auto;
+    width: 33%;
+    
+}
+#img-div {
+    width: 25%;
+    overflow: auto;
+    float: left;
+    min-height: 150px;
+    margin-right: 2%;
+}
+
+.description {
+    font-size: 1em;
+    float: left;
+    margin-bottom: 0;
+
+    /* margin-top: 10%;
+    padding-left: 40%; */
+}
+
+.clearfix {
+    overflow: auto;
+  }
+
+.buttonclass{
+    font-size: 0.5em;
+    float:left;
+    clear: left;
+    line-height: 1px;
+    border-radius: 10px;
+    margin-left: 1%;
+    margin-top: 2%;
+}
+
+.divContainer{
+    float:left;
+}

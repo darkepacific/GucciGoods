@@ -1,0 +1,41 @@
+#item-sm-pic {
+    width: 30%;
+    float: left;
+}
+
+#item-sm-info {
+    float: left;
+    width: 70%;
+
+}
+#item-sm-div {
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1%;
+    overflow: auto;
+    box-shadow: -2px 2px 3px 0px grey;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#item-sm-info > h4 {
+    margin-top: 4%;
+    text-align: center;
+    color: #2a822f;
+}
+
+#item-sm-info > p {
+    text-align: center;
+    font-size: 2em;
+}
+
+#item-sm-info > h6 {
+    text-align: center;
+    /* font-size: 1em; */
+    /* font-weight: normal; */
+    margin-left: 20px;
+    margin-right: 20px;
+ }

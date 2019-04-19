@@ -1,0 +1,106 @@
+:host {
+    padding-right: 10%;
+    padding-left: 10%;
+    display: block;
+    margin-bottom: 10%;
+}
+#row {
+    /* height: 22vh; */
+}
+
+h4 {
+    margin-top: 10%;
+    color: #1a2351;
+}
+h2 {
+    text-align: center;
+    /* margin-top: 10%; */
+    margin-bottom: 10%;
+    color: #1a2351;
+}
+#border {
+    /* margin-top: 10%; */
+    padding: 2%;
+    width: 100%;
+    padding-right: 10%;
+    padding-left: 11%;
+    margin-top: 10%;
+    background-color: #f4f4f4;
+    border: solid;
+    border-color: #f4f4f4;
+    max-width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+}
+h3 {
+    /* margin-right: 5%; */
+    color: #1a2351;
+    margin-top: 6%;
+    margin-right: 2%;
+
+}
+
+#item-pic {
+    width: 40%;
+    margin-right: 25%;
+
+}
+
+#row > img, h3, p, #form {
+    float: left;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+#border > p {
+    margin-top: 1%;
+    color: #1a2351;
+    
+    
+}
+
+#seller-link {
+    float: left;
+    clear: left;
+}
+
+#form {
+    width: 20%;
+    margin-top: 3%;
+}
+
+#row > p {
+    margin-top: 5%;
+    font-size: 2em;
+    color: yellowgreen;
+    margin-right: 8%; 
+}
+#buy-button {
+    color: #00509d;
+    border-color:  #00509d;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 5px;
+    float: left;
+}
+
+#buy-button:focus {
+    outline-color: #00509d;
+    /* border: #00cc00; */
+}
+
+#buy-button:hover {
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-color: #00509d;
+    color: white;
+}
+
+#form > p {
+    margin-right: 10%;
+}
+
+#quantity {
+    width: 20%;
+}

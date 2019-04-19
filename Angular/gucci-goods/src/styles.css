@@ -1,0 +1,18 @@
+nav {
+    padding-right: 2%;
+}
+
+nav > a {
+    float: right;
+    margin-right: 5%;
+    color: darkolivegreen;
+    margin-top: 1%;
+}
+
+nav > img {
+    width: 15%;
+}
+
+.clearfix {
+    overflow: auto;
+  }
