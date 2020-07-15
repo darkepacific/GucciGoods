@@ -21,9 +21,12 @@ public class AccountHibernate implements AccountDAO{
 	@Override
 	public Account login(String username, String password) {
 		Session s = hu.getSession();
-		String hql = "FROM Account a WHERE a.username = :username";
+		System.out.println(username);
+		System.out.println(password);
+		String hql = "FROM Account a WHERE a.username = :username AND a.password = :password";
 		Query query = s.createQuery(hql);
 		query.setParameter("username", username);
+		query.setParameter("password", password);
 		List<Account> accs = query.list();
 		
 		System.out.println("ACCOUNTS: " + accs);

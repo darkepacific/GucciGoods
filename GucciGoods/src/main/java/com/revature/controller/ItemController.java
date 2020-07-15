@@ -114,12 +114,14 @@ public class ItemController {
 				name.toLowerCase().contains(query) || 
 				(splitQuery.length > 1 && name.contains(splitQuery[1]) ) ||
 				(splitQuery.length > 2 && name.contains(splitQuery[2]) ) ||
-				 
+				(splitQuery.length > 3 && name.contains(splitQuery[3]) ) || 
+				
 				//By Tag
 				tags.contains(query) ||
 				tags.contains(splitQuery[0]) ||
 				(splitQuery.length > 1 && tags.contains(splitQuery[1]) ) ||
-				(splitQuery.length > 2 && tags.contains(splitQuery[2]) )
+				(splitQuery.length > 2 && tags.contains(splitQuery[2]) ) ||
+				(splitQuery.length > 3 && tags.contains(splitQuery[3]) )
 				) 
 				{
 				
@@ -158,15 +160,35 @@ public class ItemController {
 		}
 		
 		//Basic Sort -- If the query is the same as the item name absolutely add to the top
+		String queryWord = " "+query;
+		
 		for(int i = 0; i < results.size(); i++) {
 			if(results.get(i).getName().toLowerCase().equals(query) ||
-					results.get(i).getName().toLowerCase().contains(query)	
+					results.get(i).getName().toLowerCase().contains(queryWord)	
 					) {
 				System.out.println("@@ Exact Match: Added to the top ");
 				results.add(0, results.get(i));
 				results.remove(i+1);
 			}
 		}
+		
+		//Finally sorts again by precedence of name, Item names where the query is closer to the first 3 words go to the top again
+		for(int i = 0; i < results.size(); i++) {
+			String itemName = results.get(i).getName().toLowerCase();
+			if(itemName.toLowerCase().contains(queryWord)) {
+				String[] splitName = itemName.trim().split("\\s+");
+				for(int j = 0; j < 3; j++) {
+					if(splitName[j].equals(query)) {
+						System.out.println("@@ 3 Word Match: Added to the top ");
+						results.add(0, results.get(i));
+						results.remove(i+1);
+					}
+				}
+			}
+		}
+
+		
+		//If query is same as name 
 		
 		return results;
 	}

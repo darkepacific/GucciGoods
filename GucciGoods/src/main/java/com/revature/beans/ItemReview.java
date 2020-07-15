@@ -18,7 +18,7 @@ public class ItemReview {
 	private Item item;		
 	
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="account_id")
 	private Account user;	
 	
 	

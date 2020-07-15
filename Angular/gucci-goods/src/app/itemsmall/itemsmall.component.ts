@@ -11,7 +11,7 @@ export class ItemsmallComponent implements OnInit {
   //public item: Item = null;
   public id: string = "2";
 
-  @Input() item2: Item;
+  @Input() itemSmall: Item;
 
   constructor(private itemService: ItemService) { }
 

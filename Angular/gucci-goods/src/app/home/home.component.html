@@ -7,11 +7,11 @@
 <div id="hot">
     <h3 style="text-align: center; color: rgb(247, 173, 15);">Hot Buys</h3>
     <br>
-    <a routerLink="/item" routerLinkActive="active" (click)="setItem(item.id)"><app-itemsmall [item2]="item"></app-itemsmall></a>  <!-- setItem() -->
+    <a routerLink="/item" routerLinkActive="active" (click)="setItem(item.id)"><app-itemsmall [itemSmall]="item"></app-itemsmall></a>  <!-- setItem() -->
     <br>
-    <a routerLink="/item" routerLinkActive="active" (click)="setItem(item2.id)"><app-itemsmall [item2]="item2"></app-itemsmall></a>  <!-- setItem() -->
+    <a routerLink="/item" routerLinkActive="active" (click)="setItem(item2.id)"><app-itemsmall [itemSmall]="item2"></app-itemsmall></a>  <!-- setItem() -->
     <br>
-    <a routerLink="/item" routerLinkActive="active" (click)="setItem(item3.id)"><app-itemsmall [item2]="item3"></app-itemsmall></a>  <!-- setItem() -->
+    <a routerLink="/item" routerLinkActive="active" (click)="setItem(item3.id)"><app-itemsmall [itemSmall]="item3"></app-itemsmall></a>  <!-- setItem() -->
 </div>
     <br>
 </ng-container>
@@ -21,7 +21,7 @@
 
     <div *ngFor="let i of items">
     <br>
-    <a routerLink="/item" routerLinkActive="active" (click)="setItem(i.id)"><app-itemsmall [item2]="i"></app-itemsmall></a>  <!-- setItem() -->
+    <a routerLink="/item" routerLinkActive="active" (click)="setItem(i.id)"><app-itemsmall [itemSmall]="i"></app-itemsmall></a>  <!-- setItem() -->
     </div>
     <br>
 </ng-template>

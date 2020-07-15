@@ -2,8 +2,8 @@ package com.revature.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +16,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.beans.Account;
 import com.revature.services.AccountService;
 
-
-
 @RestController
 @RequestMapping(value="/login")
 @CrossOrigin(origins="http://localhost:4200")
-public class LoginController {
+public class LoginController {	
+	
 	@Autowired
 	private AccountService us;
+	
+    private static Logger logger = Logger.getLogger(LoginController.class);
 
 	@RequestMapping(method=RequestMethod.GET)
 	public Account goLogin(HttpSession session) {
@@ -33,10 +34,12 @@ public class LoginController {
 	@RequestMapping(method=RequestMethod.POST)
 	public Account login(@RequestParam("user") String username, 
 			@RequestParam("pass") String password, HttpSession session) {
-		Account u = us.login(username, password);
-		System.out.println(username);
-		System.out.println(password);
 		
+		logger.info("Username: " + username);
+
+		
+		Account u = us.login(username, password);
+
 		if(u != null) {
 			
 			session.setAttribute("loggedAccount", u);

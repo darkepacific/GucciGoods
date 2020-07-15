@@ -8,10 +8,21 @@
 </div>
 
 <div id="info-row" class="clearfix">
-    <div id="img-div">
+    <!-- <div id="img-div">
         <img id="avatar" [src]="this.account.avatar" width="500"/>
-    </div>
+    </div> -->
     
+    <div *ngIf="this.account.avatar">
+        <div id="img-div">
+            <img id="avatar" [src]="this.account.avatar" width="500"/>
+        </div>        
+    </div>
+
+    <div *ngIf="!this.account.avatar">
+        <div id="img-div">
+            <img id="avatar" src="https://pixel.nymag.com/imgs/daily/vulture/2017/11/27/27-lil-pump.w700.h700.jpg" width="500"/>
+        </div>     
+    </div>
 
     <div id="email-div">
         <h3>Email:</h3>

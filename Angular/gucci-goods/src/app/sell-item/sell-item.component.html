@@ -2,14 +2,19 @@
 <button id="sell-item" (click) = "toggleCollapse()" class="btn btn-warning">Sell Item Here</button><br>
 <!-- Add when this button is clicked all this appears*ngif = "!isCollapsed" --> 
 <div *ngIf = "!isCollapsed" class="clearfix" id="row" >
-  <input type="text" placeholder="Item Name" [(ngModel)]="name"/> 
-  <input type="text" placeholder="Item Description" [(ngModel)]="description" /> 
-  <input type="text" placeholder="Item Tags" [(ngModel)]="tags"/> 
+  <input type="text" placeholder="Item Name" [(ngModel)]="name"/>
+  <input type="text" placeholder="Item Tags" [(ngModel)]="tags"/>
   <input type="text" placeholder="Item Cost" [(ngModel)]="cost"/>
-  <input type="text" placeholder="Image(URL)" [(ngModel)]="image" /> 
+  <input type="url" placeholder="Image(URL)" [(ngModel)]="image" /> 
+  <br>
+  <br>
+  <textarea type="text" placeholder="Item Description"  rows="10" cols="50" [(ngModel)]="description"> </textarea>
   <form>
     <input id="post-item" type="submit" value="Post Item" (click)="postItem()" class="btn btn-success"/>
   </form>
+  <br>
+  <br>
+  <br>
 </div>
 <br>
 <br>

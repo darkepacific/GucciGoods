@@ -2,12 +2,12 @@
 <!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
-		<property name="hibernate.connection.url">jdbc:oracle:thin:@feb25-1902-wvu.cywt7bn67gin.us-east-2.rds.amazonaws.com:1521:ORCL</property>
-		<property name="hibernate.connection.username">gordontr</property>
-		<property name="hibernate.connection.password">taaphaB6</property>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@darke-db.cgkmixlhifbl.us-east-2.rds.amazonaws.com:1521:ORCL</property>
+		<property name="hibernate.connection.username">dja</property>
+		<property name="hibernate.connection.password">iadp7640</property>
 		
-		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property> <!--10g-->
 		
 		<!-- We can some hibernate specific things -->
 		<property name="show_sql">true</property>

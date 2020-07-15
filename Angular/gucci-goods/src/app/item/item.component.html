@@ -9,7 +9,10 @@
       <p>Quantity: </p><input id="quantity" type="text" [(ngModel)]="quantity"/>
       <input id="buy-button" type="submit" value="Buy Now" (click)="buyItem()"/>
     </div>
-    
+      
+    <br>
+    <button type="button" class="btn btn-outline-success" id="seller-link" (click)="getSellerProfile()">Visit seller profile</button>
+
   </div>
   <h4>Item Description:</h4>
   <p>{{item.item_description}}</p>
@@ -27,7 +30,8 @@
   <input type="text" placeholder="Write a review here" [(ngModel)]= "ItemReview" (keyup.enter)="postReview()"/><br>
   <!-- <textarea placeholder="Write a review here" [(ngModel)]= "ItemReview"></textarea> -->
   <input id="buy-button" type="submit" value="Post Review" (click) = "postReview()"/>
-  <p id="seller-link" (click)="getSellerProfile()">Visit seller profile</p>
+  <br>
+  <br>
   <!-- <p>{{item.item_description}}</p> -->
 
 

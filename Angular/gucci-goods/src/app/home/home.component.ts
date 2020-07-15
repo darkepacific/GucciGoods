@@ -8,6 +8,7 @@ import { timer } from 'rxjs';
 import 'rxjs/add/observable/timer';
 import { ItemsmallComponent } from '../itemsmall/itemsmall.component';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,16 +21,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   public item : Item;
   public item2 : Item;
   public item3 : Item;
+  public n3: string;
 
   constructor(private searchService: SearchService, private itemService: ItemService) { }
 
   ngOnInit() {
-    this.getItem("2");
-    this.getItem2("5");
-    this.getItem3("1");
+    this.getItem(this.getRandomArbitrary(1,4));
+    this.getItem2(this.getRandomArbitrary(4,7));
+    this.getItem3(this.getRandomArbitrary(7,10));
     this.flag = true;
     this.items = this.itemService.getStored();
-    this.timer = Observable.timer(0,55);
+    this.timer = Observable.timer(0,50);
     this.timer.subscribe((t) => this.onTimeOut());
   }
 
@@ -37,15 +39,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.flag = false;
   }
 
+  getRandomArbitrary(min, max) {
+    var t = JSON.stringify(Math.floor(Math.random() * (max - min) + min));
+    console.log(t);
+    return t;
+  }
+
   onTimeOut() {
     if(this.flag){
       this.items = this.itemService.getStored();
       if(this.items == undefined || this.items.length == 0){
-        if(this.item3 == undefined){
-          this.getItem("2");
-          this.getItem2("5");
-          this.getItem3("1");
-        }
+        // if(this.item == undefined){
+        //   this.getItem(this.getRandomArbitrary(1,4));
+        // }
+        // if(this.item2 == undefined){
+        //   this.getItem2(this.getRandomArbitrary(4,7));
+        // }
+        // if(this.item3 == undefined){
+        //   this.getItem3(this.getRandomArbitrary(8,10));
+        // }
        
       }
       else{
