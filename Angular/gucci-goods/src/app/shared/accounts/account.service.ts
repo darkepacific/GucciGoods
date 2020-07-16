@@ -71,7 +71,6 @@ export class AccountService {
         console.log("Grabbed seller account");
         console.log(this.sellerAccount);
         this.router.navigateByUrl('seller-profile');
-
         return this.sellerAccount;
       })
     );
@@ -98,7 +97,7 @@ export class AccountService {
       .pipe(map(resp => {
         const location: string = resp as string;
         console.log("IN UPDATEEMAIL response" + location);
-        this.account.country = location;
+        this.account.location = location;
         return location;
       }));
   }
@@ -149,10 +148,10 @@ export class AccountService {
     );
   }
   
-  getRetrievedSeller(): Account {
+  getSeller(): Account {
     return this.sellerAccount;
   }
-  clearRetrievedSeller(): void {
+  clearSeller(): void {
     this.sellerAccount = null;
   }
   getAccount(): Account {

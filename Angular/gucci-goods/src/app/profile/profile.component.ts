@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
     }
     this.email = this.account.email;
     
-    this.location = this.account.country;
+    this.location = this.account.location;
     
     if(this.account['location']){
       this.location = this.account['location'];
@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
 
     this.phone = this.account.phone;
     this.description = this.account.description;
-    this.sellerAccount = this.accountService.getRetrievedSeller();
+    this.sellerAccount = this.accountService.getSeller();
     console.log(this.sellerAccount);
     
     if(this.sellerAccount){
@@ -55,10 +55,10 @@ export class ProfileComponent implements OnInit {
       console.log(this.sellerAccount);
       this.account = this.sellerAccount;
       this.email = this.sellerAccount.email;
-      this.location = this.sellerAccount.country;
+      this.location = this.sellerAccount.location;
       this.phone = this.sellerAccount.phone;
       this.description = this.sellerAccount.description;
-      this.accountService.clearRetrievedSeller();
+      this.accountService.clearSeller();
     }
 
   }
@@ -92,11 +92,11 @@ export class ProfileComponent implements OnInit {
 
   locationSave(){
     console.log(this.location);
-    this.account.country = this.location; 
-    this.accountService.updateLocation(this.account.country, this.account.id).subscribe(
-      country=> {
-        console.log(country.toString());
-        this.location = country.toString();
+    this.account.location = this.location; 
+    this.accountService.updateLocation(this.account.location, this.account.id).subscribe(
+      $location=> {
+        console.log($location.toString());
+        this.location = $location.toString();
       }
     )
     this.locationCollapsed = !this.locationCollapsed;

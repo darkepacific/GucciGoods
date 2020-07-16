@@ -31,10 +31,10 @@ export class SellerProfileComponent implements OnInit {
     this.account = this.accountService.getAccount();
     console.log(this.account);
     this.email = this.account.email;
-    this.location = this.account.country;
+    this.location = this.account.location;
     this.phone = this.account.phone;
     this.description = this.account.description;
-    this.sellerAccount = this.accountService.getRetrievedSeller();
+    this.sellerAccount = this.accountService.getSeller();
     console.log(this.sellerAccount);
     
     if(this.sellerAccount){
@@ -42,73 +42,12 @@ export class SellerProfileComponent implements OnInit {
       console.log(this.sellerAccount);
       this.account = this.sellerAccount;
       this.email = this.sellerAccount.email;
-      this.location = this.sellerAccount.country;
-      this.phone = this.sellerAccount.phone;
+      this.location = this.sellerAccount.location;
+      this.phone = "XXX-XXXX" + this.sellerAccount.phone.substring(7,12);
       this.description = this.sellerAccount.description;
-      this.accountService.clearRetrievedSeller();
+      this.accountService.clearSeller();
     }
 
   }
-
-  emailCollapse(){
-    this.emailCollapsed = !this.emailCollapsed;
-  }
-  
-  locationCollapse(){
-    this.locationCollapsed = !this.locationCollapsed;
-  }
-
-  phoneCollapse(){
-    this.phoneCollapsed = !this.phoneCollapsed;
-  }
-
-  descriptionCollapse(){
-    this.descriptionCollapsed = !this.descriptionCollapsed;
-  }
-
-  emailSave(){
-    console.log(this.email);
-    this.account.email = this.email;
-    this.accountService.updateEmail(this.account.email, this.account.id).subscribe(
-      email=> {
-        this.email = email.toString();
-      }
-    )
-    this.emailCollapsed = !this.emailCollapsed;
-  }
-
-  locationSave(){
-    console.log(this.location);
-    this.account.country = this.location; 
-    this.accountService.updateLocation(this.account.country, this.account.id).subscribe(
-      country=> {
-        this.location = country.toString();
-      }
-    )
-    this.locationCollapsed = !this.locationCollapsed;
-  }
-
-  phoneSave(){
-    console.log(this.phone);
-    this.account.phone = this.phone;
-    this.accountService.updatePhone(this.account.phone, this.account.id).subscribe(
-      phone=> {
-        this.phone = phone.toString();
-      }
-    )
-    this.phoneCollapsed = !this.phoneCollapsed;
-  }
-
-  descriptionSave(){
-    console.log(this.description);
-    this.account.description = this.description;
-    this.accountService.updateDescription(this.account.description, this.account.id).subscribe(
-      description=> {
-        this.description = description.toString();
-      }
-    )
-    this.descriptionCollapsed = !this.descriptionCollapsed;
-  }
-
 
 }

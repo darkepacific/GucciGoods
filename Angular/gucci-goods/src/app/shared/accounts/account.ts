@@ -4,7 +4,7 @@ export class Account {
     password: string;
     firstname: string;
     lastname: string;
-    country: string;
+    location: string;
     phone: string;
     email: string;
     description: string;
