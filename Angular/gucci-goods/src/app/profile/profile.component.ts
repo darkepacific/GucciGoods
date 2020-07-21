@@ -31,8 +31,6 @@ export class ProfileComponent implements OnInit {
     console.log(this.account);
     
     if(!this.account){
-      console.log("we in here");
-      //this.router.navigate(['login'])
       this.router.navigate(['/login']);
       this.account = new Account();
       

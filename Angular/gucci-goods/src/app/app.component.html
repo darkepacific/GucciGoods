@@ -5,7 +5,7 @@
         <img src="/assets/GG_Logo.png" id="logo" />
     </a>
     <a class="float-right" routerLink="/login" routerLinkActive="active">Login</a>
-    <a class="float-right" routerLink="/register" routerLinkActive="active">Register</a>
+    <a *ngIf="!x" class="float-right" routerLink="/register" routerLinkActive="active">Register</a>
     <a class="float-right" routerLink="/profile" routerLinkActive="active">Profile</a>
 
   </nav>

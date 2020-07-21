@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getRandomArbitrary(min, max) {
     var t = JSON.stringify(Math.floor(Math.random() * (max - min) + min));
-    console.log(t);
     return t;
   }
 
