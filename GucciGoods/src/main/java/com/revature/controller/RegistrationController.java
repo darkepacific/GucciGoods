@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ import com.revature.services.AccountService;
 public class RegistrationController {
 	@Autowired
 	private AccountService as;
+	
+	private static Logger logger = Logger.getLogger(LoginController.class);
 
 //	@RequestMapping(method=RequestMethod.GET)
 //	public Account goLogin(HttpSession session) {
@@ -54,8 +57,8 @@ public class RegistrationController {
 		
 		a = as.saveAccount(a);
 		
-		System.out.println(username);
-		System.out.println(password);
+		logger.info(username);
+		logger.info(password);
 		
 		if(a != null) {
 			//session.setAttribute("registeredAccount", a);

@@ -2,6 +2,7 @@ package com.revature.data;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.revature.beans.Account;
+import com.revature.controller.LoginController;
 import com.revature.util.HibernateUtil;
 
 @Component
@@ -18,11 +20,13 @@ public class AccountHibernate implements AccountDAO{
 	@Autowired			//To be auto-wired it has to be a BEAN
 	private HibernateUtil hu;
 	
+	private static Logger logger = Logger.getLogger(LoginController.class);
+	
 	@Override
 	public Account login(String username, String password) {
 		Session s = hu.getSession();
-		System.out.println(username);
-		System.out.println(password);
+		logger.info(username);
+		logger.info(password);
 		String hql = "FROM Account a WHERE a.username = :username AND a.password = :password";
 		Query query = s.createQuery(hql);
 		query.setParameter("username", username);
@@ -87,10 +91,9 @@ public class AccountHibernate implements AccountDAO{
 		query.setParameter("email", newEmail);
 		query.setParameter("userid", id);
 		int result = query.executeUpdate();
-		System.out.println("result   " + result);
+		logger.info("Result  " + result);
 		t.commit();
 		s.close();
-		System.out.println("Done Updating");
 	}
 	
 	@Override
@@ -102,10 +105,9 @@ public class AccountHibernate implements AccountDAO{
 		query.setParameter("location", newLocation);
 		query.setParameter("userid", id);
 		int result = query.executeUpdate();
-		System.out.println("result   " + result);
+		logger.info("Result   " + result);
 		t.commit();
 		s.close();
-		System.out.println("Done Updating");
 	}
 	
 	@Override
@@ -120,7 +122,6 @@ public class AccountHibernate implements AccountDAO{
 		System.out.println("result   " + result);
 		t.commit();
 		s.close();
-		System.out.println("Done Updating");
 	}
 	
 	@Override
@@ -132,10 +133,9 @@ public class AccountHibernate implements AccountDAO{
 		query.setParameter("description", newDescription);
 		query.setParameter("userid", id);
 		int result = query.executeUpdate();
-		System.out.println("result   " + result);
+		logger.info("Result " + result);
 		t.commit();
 		s.close();
-		System.out.println("Done Updating");
 	}
 	
 	
