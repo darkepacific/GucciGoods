@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,13 +29,15 @@ public class ItemController {
 	private ItemService is;
 	@Autowired
 	private AccountService as;
+	
+	private static Logger logger = Logger.getLogger(LoginController.class);
 
 	@RequestMapping(method=RequestMethod.GET)
 	public Item getItem(@RequestParam("id") String itemId, HttpSession session)
 	{
 		int id = Integer.parseInt(itemId);
 		Item i = is.getItemById(id);
-		System.out.println(id);
+		logger.info("Id: " + id);
 
 		if(i != null) {
 
@@ -50,7 +53,7 @@ public class ItemController {
 	public List<Item> getItems(HttpSession session) {
 		List<Item> items = new ArrayList<Item>();
 		items = is.getItems();
-		System.out.println("\n \n" + items);
+		logger.info("\n \n" + items);
 		//session.setAttribute("loggedAccount", u);
 		return items;
 	}
@@ -139,11 +142,11 @@ public class ItemController {
 						(splitTags.length > 2 && (splitTags[2].equals(splitQuery[0]) ||  splitTags[2].equals(splitQuery[0] + ",") ))
 						
 					) {
-						System.out.println("@@ Added to the start " + name + ", names" );
+						logger.info("@@ Added to the start " + name + ", names" );
 						results.add(0, item);
 					}
 					else {
-						System.out.println("@@ Added to the bottm " + name + ", names" );
+						logger.info("@@ Added to the bottom " + name + ", names" );
 						results.add(item);
 					}	
 				
@@ -166,7 +169,7 @@ public class ItemController {
 			if(results.get(i).getName().toLowerCase().equals(query) ||
 					results.get(i).getName().toLowerCase().contains(queryWord)	
 					) {
-				System.out.println("@@ Exact Match: Added to the top ");
+				logger.info("@@ Exact Match: Added to the top ");
 				results.add(0, results.get(i));
 				results.remove(i+1);
 			}
@@ -179,7 +182,7 @@ public class ItemController {
 				String[] splitName = itemName.trim().split("\\s+");
 				for(int j = 0; j < 3; j++) {
 					if(splitName[j].equals(query)) {
-						System.out.println("@@ 3 Word Match: Added to the top ");
+						logger.info("@@ 3 Word Match: Added to the top ");
 						results.add(0, results.get(i));
 						results.remove(i+1);
 					}

@@ -56,7 +56,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/email", method=RequestMethod.POST)
 	public String updateEmail(@RequestParam("newemail") String email, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
-		System.out.println("asdfasdofaodsifadfiouaosdfuioelkfjvmalksdfjweoifslkjfa;ldsk " + email);
+		logger.info("Email: " + email);
 		us.updateEmail(email, id);
 		
 		Account u = us.getAccountById(id);
@@ -68,7 +68,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/location", method=RequestMethod.POST)
 	public String updateLocation(@RequestParam("newlocation") String location, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
-		System.out.println("asdfasdofaodsifadfiouaosdfuioelkfjvmalksdfjweoifslkjfa;ldsk " + location);
+		logger.info("Location: " + location);
 		us.updateLocation(location, id);
 		
 		Account u = us.getAccountById(id);
@@ -80,7 +80,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/phone", method=RequestMethod.POST)
 	public String updatePhone(@RequestParam("newphone") String phone, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
-		System.out.println("asdfasdofaodsifadfiouaosdfuioelkfjvmalksdfjweoifslkjfa;ldsk " + phone);
+		logger.info("Phone: " + phone);
 		us.updatePhone(phone, id);
 		
 		Account u = us.getAccountById(id);
@@ -92,7 +92,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/description", method=RequestMethod.POST)
 	public String updateDescription(@RequestParam("newdescription") String description, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
-		System.out.println("asdfasdofaodsifadfiouaosdfuioelkfjvmalksdfjweoifslkjfa;ldsk " + description);
+		logger.info("Description: " + description);
 		us.updateDescription(description, id);
 		
 		Account u = us.getAccountById(id);
@@ -105,7 +105,7 @@ public class LoginController {
 	@RequestMapping(value = "{pathId}", method = RequestMethod.GET)
 	public Account getSellerAccount(@PathVariable("pathId") String id, HttpSession session) {
 		int aId = Integer.parseInt(id);
-		System.out.println("$$$$$$$$$$$$$$$@@@" + id);
+		logger.info("Id: " + id);
 		
 		return us.getAccountById(aId);
 		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,30 +30,32 @@ public class AdminController {
 	@Autowired
 	private ItemService is;
 	
+	private static Logger logger = Logger.getLogger(LoginController.class);
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public List<Account> getAccounts(HttpSession session) {
 		List<Account> accs = new ArrayList<Account>();
 		accs = as.getAccounts();
-		System.out.println("\n \n" + accs);
+		logger.info("\n \n" + accs);
 		//session.setAttribute("loggedAccount", u);
 		return accs;
 	}
 
 	@RequestMapping(value = "{pathId}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable("pathId") String id, HttpSession session) {
-		System.out.println("@@@$$$$$$$$$$$$$$$" + id);
-		int aId = 0;
-		int iId = 0;
+		logger.info("Id: " + id);
+		int accId = 0;
+		int itemId = 0;
 
 		if (id.substring(0, 1).equals("i")) {
 			id = id.substring(6);
-			iId = Integer.parseInt(id);
-			System.out.println("$$$$$$$$$$$$$$$" + id);
-			is.deleteItem(is.getItemById(iId));
+			itemId = Integer.parseInt(id);
+			logger.info("Id: " + itemId);
+			is.deleteItem(is.getItemById(itemId));
 		} else {
-			aId = Integer.parseInt(id);
-			System.out.println("$$$$$$$$$$$$$$$@@@" + id);
-			as.deleteAccount(as.getAccountById(aId));
+			accId = Integer.parseInt(id);
+			logger.info("Account Id:" + accId);
+			as.deleteAccount(as.getAccountById(accId));
 		}
 	}
 	

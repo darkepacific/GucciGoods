@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,8 @@ public class ItemReviewController {
 	@Autowired
 	private ItemService is;
 	
+	private static Logger logger = Logger.getLogger(LoginController.class);
+	
 	@RequestMapping(method=RequestMethod.POST,  value="/get")
 	public List<ItemReview> getReviews(@RequestParam("itemid") int itemid, HttpSession session) throws JsonProcessingException {
 		System.out.println("itemid " + itemid);
@@ -44,9 +47,9 @@ public class ItemReviewController {
 	@RequestMapping(method=RequestMethod.POST)
 	public List<ItemReview> addReview(@RequestParam("accountid") int accountid, @RequestParam("itemid") int itemid,
 			@RequestParam("description") String description, HttpSession session) throws JsonProcessingException {
-		System.out.println("INSIDE ITEMREVIEW CONTROLLER accountid " + accountid);
-		System.out.println("itemid " + itemid);
-		System.out.println("description " + description);
+		logger.info("Acountid: " + accountid);
+		logger.info("Itemid " + itemid);
+		logger.info("Description: " + description);
 		
 		ItemReview newReview = new ItemReview();
 		
