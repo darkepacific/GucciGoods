@@ -56,14 +56,14 @@ export class SearchComponent implements OnInit {
 
   search(): void{
     console.log(this.query);
-    if(! (this.query == " " || this.query == "  ") ){
+    if(! (this.query == " ") ){
  
       this.searchService.search(this.query).subscribe(
         data=> {
           this.result = data;
           console.log(this.result);
           this.itemService.setStored(this.result);
-          console.log("STORING:" + this.result);
+          this.printStored();
 
           this.router.navigateByUrl('home');
           
@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit {
   }
   
   printStored(){
-    console.log("THIS " + this.result);
+    console.log("Search Result: " + this.result);
   }
   
    /*search() {
