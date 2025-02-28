@@ -33,14 +33,6 @@ nav {
     width: 100%;
   }
   
-  /* Explicitly allow the search wrapper to expand fully */
-  .search-wrapper {
-    display: flex;
-    flex-grow: 1;
-    max-width: 1000px; /* Increase this if necessary */
-    width: 100%;
-  }  
-
 /* Right side buttons stay aligned */
 .right-nav {
     flex: 1;

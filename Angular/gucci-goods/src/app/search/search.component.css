@@ -1,13 +1,24 @@
 /* Wrap the search input & button */
 .search-wrapper {
    display: flex;
-   flex-grow: 1;
+   align-items: center;
    width: 100%;
-   max-width: 1000px; /* Make sure it's large */
+   /* max-width: 3000px; */
    border: 2px solid #d1d1d1;
-   border-radius: 5px;
+   border-radius: 8px;
    overflow: hidden;
    background-color: #fff;
+ }
+
+ /* Let the ng2-completer expand */
+.search-wrapper ng2-completer {
+   flex: 1 1 auto; 
+   min-width: 100;       /* prevents the default min-width from blocking shrink */
+ }
+ 
+ :host {
+   display: block;  /* or display: flex */
+   width: 80%;
  }
  
  /* Input field should take full width */
@@ -26,7 +37,7 @@
  .search-btn {
    background-color: #00cc00;
    border: none;
-   padding: 14px 24px;
+   padding: 17px 24px;
    cursor: pointer;
    transition: background 0.3s ease-in-out;
    display: flex;
@@ -38,7 +49,7 @@
  
  /* Search button hover effect */
  .search-btn:hover {
-   background-color: #008000;
+   background-color: #00bb00;
  }
  
  /* White search icon */
