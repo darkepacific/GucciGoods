@@ -48,16 +48,32 @@ h2 {
 }
 
 #register-button {
-    color: white;
-    border-color: #007bff;
-    background-color: #007bff;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
+    color: #007bff;  /* Match the login button text color */
+    border-color: #007bff;  /* Match the login button border */
+    background-color: white;  /* Match the login button background */
+    width: 60%;  /* Ensures it matches login input widths */
+    padding: 10px;  /* Matches input padding */
+    border-radius: 5px;  /* Matches input styling */
     font-size: 1em;
     margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #register-button:hover {
-    background-color: #0056b3;
+    background-color: #007bff;  /* Matches login button hover effect */
+    color: white;
+    transition: color .15s ease-in-out, 
+                background-color .15s ease-in-out, 
+                border-color .15s ease-in-out, 
+                box-shadow .15s ease-in-out;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+    text-align: center;
+}
+

@@ -84,61 +84,104 @@ public class AccountHibernate implements AccountDAO{
 
 	@Override
 	public void updateEmail(String newEmail, int id) {
-		Session s = hu.getSession();
-		Transaction t = s.beginTransaction();
-		Query query = s.createQuery("update Account set email =:email " +
-					"where id =:userid");
-		query.setParameter("email", newEmail);
-		query.setParameter("userid", id);
-		int result = query.executeUpdate();
-		logger.info("Result  " + result);
-		t.commit();
-		s.close();
+	    Session s = hu.getSession();
+	    Transaction t = null;
+	    try {
+	        t = s.beginTransaction();
+	        Query query = s.createQuery("update Account set email = :email where id = :userid");
+	        query.setParameter("email", newEmail);
+	        query.setParameter("userid", id);
+	        int result = query.executeUpdate();
+	        logger.info("Result " + result);
+	        t.commit();
+	    } catch (Exception e) {
+	        if (t != null) t.rollback(); // ✅ Rollback on failure
+	        logger.error("Error updating email", e);
+	    } finally {
+	        s.close();
+	    }
 	}
-	
+
 	@Override
 	public void updateLocation(String newLocation, int id) {
-		Session s = hu.getSession();
-		Transaction t = s.beginTransaction();
-		Query query = s.createQuery("update Account set location =:location " +
-					"where id =:userid");
-		query.setParameter("location", newLocation);
-		query.setParameter("userid", id);
-		int result = query.executeUpdate();
-		logger.info("Result   " + result);
-		t.commit();
-		s.close();
+	    Session s = hu.getSession();
+	    Transaction t = null;
+	    try {
+	        t = s.beginTransaction();
+	        Query query = s.createQuery("update Account set location = :location where id = :userid");
+	        query.setParameter("location", newLocation);
+	        query.setParameter("userid", id);
+	        int result = query.executeUpdate();
+	        logger.info("Result " + result);
+	        t.commit();
+	    } catch (Exception e) {
+	        if (t != null) t.rollback();
+	        logger.error("Error updating location", e);
+	    } finally {
+	        s.close();
+	    }
 	}
-	
+
 	@Override
 	public void updatePhone(String newPhone, int id) {
-		Session s = hu.getSession();
-		Transaction t = s.beginTransaction();
-		Query query = s.createQuery("update Account set phone =:phone " +
-					"where id =:userid");
-		query.setParameter("phone", newPhone);
-		query.setParameter("userid", id);
-		int result = query.executeUpdate();
-		System.out.println("result   " + result);
-		t.commit();
-		s.close();
+	    Session s = hu.getSession();
+	    Transaction t = null;
+	    try {
+	        t = s.beginTransaction();
+	        Query query = s.createQuery("update Account set phone = :phone where id = :userid");
+	        query.setParameter("phone", newPhone);
+	        query.setParameter("userid", id);
+	        int result = query.executeUpdate();
+	        logger.info("Result " + result);
+	        t.commit();
+	    } catch (Exception e) {
+	        if (t != null) t.rollback();
+	        logger.error("Error updating phone", e);
+	    } finally {
+	        s.close();
+	    }
 	}
-	
+
 	@Override
 	public void updateDescription(String newDescription, int id) {
-		Session s = hu.getSession();
-		Transaction t = s.beginTransaction();
-		Query query = s.createQuery("update Account set description =:description " +
-					"where id =:userid");
-		query.setParameter("description", newDescription);
-		query.setParameter("userid", id);
-		int result = query.executeUpdate();
-		logger.info("Result " + result);
-		t.commit();
-		s.close();
+	    Session s = hu.getSession();
+	    Transaction t = null;
+	    try {
+	        t = s.beginTransaction();
+	        Query query = s.createQuery("update Account set description = :description where id = :userid");
+	        query.setParameter("description", newDescription);
+	        query.setParameter("userid", id);
+	        int result = query.executeUpdate();
+	        logger.info("Result " + result);
+	        t.commit();
+	    } catch (Exception e) {
+	        if (t != null) t.rollback();
+	        logger.error("Error updating description", e);
+	    } finally {
+	        s.close();
+	    }
 	}
-	
-	
+
+	@Override
+	public void updateAvatar(String newAvatar, int id) {
+	    Session s = hu.getSession();
+	    Transaction t = null;
+	    try {
+	        t = s.beginTransaction();
+	        Query query = s.createQuery("update Account set avatar = :avatar where id = :userid");
+	        query.setParameter("avatar", newAvatar);
+	        query.setParameter("userid", id);
+	        int result = query.executeUpdate();
+	        logger.info("Result " + result);
+	        t.commit();
+	    } catch (Exception e) {
+	        if (t != null) t.rollback();
+	        logger.error("Error updating avatar", e);
+	    } finally {
+	        s.close();
+	    }
+	}
+
 	
 }
 

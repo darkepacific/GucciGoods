@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +27,7 @@ import com.revature.services.ItemService;
 @CrossOrigin(origins="http://localhost:4200")
 public class ItemController {
 	@Autowired
-	private ItemService is;
+	private ItemService itemService;
 	@Autowired
 	private AccountService as;
 	
@@ -36,7 +37,7 @@ public class ItemController {
 	public Item getItem(@RequestParam("id") String itemId, HttpSession session)
 	{
 		int id = Integer.parseInt(itemId);
-		Item i = is.getItemById(id);
+		Item i = itemService.getItemById(id);
 		logger.info("Id: " + id);
 
 		if(i != null) {
@@ -52,10 +53,15 @@ public class ItemController {
 	@RequestMapping(method=RequestMethod.GET, value="/all")
 	public List<Item> getItems(HttpSession session) {
 		List<Item> items = new ArrayList<Item>();
-		items = is.getItems();
+		items = itemService.getItems();
 		logger.info("\n \n" + items);
 		//session.setAttribute("loggedAccount", u);
 		return items;
+	}
+	
+	@RequestMapping(value="/user/{id}", method=RequestMethod.GET)
+	public List<Item> getItemsByUser(@PathVariable("id") int userId) {
+	    return itemService.getItemsByUser(userId);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/buy")
@@ -66,10 +72,10 @@ public class ItemController {
 		
 		//Item i = is.getItemById(id);
 		List<Item> items = new ArrayList<Item>();
-		Item it = is.getItemById(itemId);
+		Item it = itemService.getItemById(itemId);
 		
 		
-		items = is.getItemsByName(name);
+		items = itemService.getItemsByName(name);
 		if(quantity > items.size()) {
 			return null;
 		}
@@ -78,11 +84,11 @@ public class ItemController {
 			for(int i = 0; i < quantity; i++) {
 				it = items.get(i);
 				it.setSold(1);
-				is.update(it);
+				itemService.update(it);
 			}
 		}else {
 			it.setSold(1);
-			is.update(it);
+			itemService.update(it);
 		}
 		
 		//System.out.println(id);
@@ -94,7 +100,7 @@ public class ItemController {
 	{
 		List<Item> results = new ArrayList<Item>();
 		List<Item> items = new ArrayList<Item>();
-		items = is.getItems();
+		items = itemService.getItems();
 		
 		query = query.toLowerCase();
 		

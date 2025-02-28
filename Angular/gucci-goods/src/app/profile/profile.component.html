@@ -3,74 +3,117 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <app-search></app-search>
-<div id="name">
-    <h2>{{ account.firstname+ ' ' +account.lastname }}</h2>
-</div>
+<div id="profile-container">
 
-<div id="info-row" class="clearfix">
+    <!-- Centered Name -->
+    <div id="name">
+        <h2>{{ account.firstname + ' ' + account.lastname }}</h2>
+    </div>
 
-    <div *ngIf="this.account.avatar">
+
+    <div id="info-row">
+        
+        <!-- Avatar Section -->
         <div id="img-div">
-            <img id="avatar" [src]="this.account.avatar" width="500"/>
+            <img id="avatar" [src]="this.avatar ? this.avatar : 'https://pixel.nymag.com/imgs/daily/vulture/2017/11/27/27-lil-pump.w700.h700.jpg'" />
+            <button (click)="avatarCollapse()" *ngIf="avatarCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
+        
+            <div *ngIf="!avatarCollapsed">
+                <input type="text" [placeholder]="'Enter a URL'" [value]="this.avatar" (input)="avatar = $event.target.value"/> 
+                <button (click)="avatarSave()" class="btn btn-success buttons">Save</button>
+                <button (click)="avatarCollapse()" class="btn btn-danger buttons">Cancel</button>
+            </div>
         </div>        
-    </div>
 
-    <div *ngIf="!this.account.avatar">
-        <div id="img-div">
-            <img id="avatar" src="https://pixel.nymag.com/imgs/daily/vulture/2017/11/27/27-lil-pump.w700.h700.jpg" width="500"/>
-        </div>     
-    </div>
+        <!-- Details Section -->
+        <div id="details-div">
 
+            <div class="field-container">
+                <h3>Email:</h3>
+                <span class="description" *ngIf="emailCollapsed">{{ this.email }}</span> 
+                <button (click)="emailCollapse()" *ngIf="emailCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
+                
+                <div *ngIf="!emailCollapsed">
+                    <input type="text" [value]="this.email" (input)="email = $event.target.value"/> 
+                    <button (click)="emailSave()" class="btn btn-success buttons">Save</button>
+                    <button (click)="emailCollapse()" class="btn btn-danger buttons">Cancel</button>
+                </div>
+            </div>
 
-    <div id="email-div">
-        <h3>Email:</h3>
-        <p class="description" *ngIf = "emailCollapsed">{{ this.email }}</p> 
-        <button (click) = "emailCollapse()" *ngIf = "emailCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
-        
-        <div *ngIf = "!emailCollapsed">
-            <input type="text" [value] = "this.email" (input) = "email = $event.target.value"/> 
-            <button (click) = "emailSave()" class="btn btn-success buttons" >Save</button>
-            <button (click) = "emailCollapse()" class="btn btn-danger buttons">Cancel</button>
+            <div class="field-container">
+                <h3>Location:</h3> 
+                <span class="description" *ngIf="locationCollapsed">{{ this.location }}</span> 
+                <button (click)="locationCollapse()" *ngIf="locationCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
+                
+                <div *ngIf="!locationCollapsed">
+                    <input type="text" [value]="this.location" (input)="this.location = $event.target.value"/>
+                    <button (click)="locationSave()" class="btn btn-success buttons">Save</button>
+                    <button (click)="locationCollapse()" class="btn btn-danger buttons">Cancel</button>
+                </div>
+            </div>
+
+            <div class="field-container">
+                <h3>Phone:</h3> 
+                <span class="description" *ngIf="phoneCollapsed">{{ this.phone }}</span>
+                <button (click)="phoneCollapse()" *ngIf="phoneCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
+
+                <div *ngIf="!phoneCollapsed">
+                    <input type="text" [value]="this.phone" (input)="phone = $event.target.value"/> 
+                    <button (click)="phoneSave()" class="btn btn-success buttons">Save</button>
+                    <button (click)="phoneCollapse()" class="btn btn-danger buttons">Cancel</button>
+                </div>
+            </div>
+
+            <div class="field-container">
+                <h3>Description:</h3>
+                <span class="description" *ngIf="descriptionCollapsed && !sellerAccount">{{ this.description }}</span> 
+                <button (click)="descriptionCollapse()" *ngIf="descriptionCollapsed" class="btn btn-info buttonclass">Edit</button>
+
+                <div *ngIf="!descriptionCollapsed">
+                    <textarea type="text" [value]="this.description" (input)="description = $event.target.value"></textarea> 
+                    <button (click)="descriptionSave()" class="btn btn-success buttons">Save</button>
+                    <button (click)="descriptionCollapse()" class="btn btn-danger buttons">Cancel</button>
+                </div>
+            </div>
+
         </div>
+
     </div>
 
-    <div id="location-div">
-        <h3>Location:</h3> 
-        <p class="description" *ngIf = "locationCollapsed">{{ this.location }}</p> 
-        <button (click) = "locationCollapse()" *ngIf = "locationCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
-        
-        <div *ngIf = "!locationCollapsed">
-            <input id="loc-input" type="text" [value] = "this.location" (input) = "this.location = $event.target.value"/>
-            <button id="loc-btn-1" (click) = "locationSave()" class="btn btn-success buttons" >Save</button>
-            <button id="loc-btn-2" (click) = "locationCollapse()" class="btn btn-danger buttons">Cancel</button>
-        </div>
+    <!-- Centered Sell Button -->
+    <div id="sell-item-container">
+        <app-sell-item></app-sell-item>
     </div>
 
-    <div id="phone-div">
-        <h3>Phone:</h3> 
-        <p class="description" *ngIf = "phoneCollapsed">{{ this.phone }}</p>
-        <button (click) = "phoneCollapse()" *ngIf = "phoneCollapsed && !sellerAccount" class="btn btn-info buttonclass">Edit</button>
-
-        <div *ngIf = "!phoneCollapsed">
-            <input type="text" [value] = "this.phone" (input) = "phone = $event.target.value"/> <br>
-            <button (click) = "phoneSave()" class="btn btn-success buttons">Save</button>
-            <button (click) = "phoneCollapse()" class="btn btn-danger buttons">Cancel</button>
-        </div>
+    <!-- User's Items List -->
+    <div id="user-items">
+        <h2>Items Sold</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Tags</th>
+                    <th>Cost</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.tags }}</td>
+                    <td>{{ item.cost | currency }}</td>
+                    <td>{{ item.description }}</td>
+                    <td><img [src]="item.image" width="50"/></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div id="description-div">
-        <h3>Description:</h3>
-        <p class="description" *ngIf = "descriptionCollapsed && !sellerAccount">{{ this.description }}</p> 
-        <button (click) = "descriptionCollapse()" *ngIf = "descriptionCollapsed" class="btn btn-info buttonclass">Edit</button>
 
-        <div *ngIf = "!descriptionCollapsed">
-            <textarea type="text" [value] = "this.description" (input) = "description = $event.target.value"></textarea> <br>
-            <button (click) = "descriptionSave()" class="btn btn-success buttons">Save</button>
-            <button (click) = "descriptionCollapse()" class="btn btn-danger buttons">Cancel</button>
-        </div>
-    </div>
 </div>
-<app-sell-item></app-sell-item>
 
 <br>
 <br>

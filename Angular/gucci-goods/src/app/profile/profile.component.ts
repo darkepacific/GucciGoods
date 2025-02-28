@@ -4,6 +4,8 @@ import { LoginComponent } from '../login/login.component';
 import { AccountService } from '../shared/accounts/account.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Item } from '../shared/items/item';
+import { ItemService } from 'src/app/shared/items/item.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,13 +20,16 @@ export class ProfileComponent implements OnInit {
   public phone:string;
   public description: string;
   public sellerAccount: Account;
+  public avatar: string;
+  public items: Item[];
 
   emailCollapsed: boolean = true;
   locationCollapsed:boolean = true;
   phoneCollapsed:boolean = true;
   descriptionCollapsed:boolean = true;
+  avatarCollapsed: boolean = true;
 
-  constructor(private accountService: AccountService, private router: Router, private pageLocation: Location) { }
+  constructor(private accountService: AccountService, private router: Router, private pageLocation: Location, private itemService: ItemService) { }
 
   ngOnInit() {
     this.account = this.accountService.getAccount();
@@ -46,8 +51,17 @@ export class ProfileComponent implements OnInit {
     this.phone = this.account.phone;
     this.description = this.account.description;
     this.sellerAccount = this.accountService.getSeller();
+    this.avatar = this.account.avatar || '';
     console.log(this.sellerAccount);
     
+    // Fetch user's items
+    this.itemService.getItemsByUser(this.account.id).subscribe(
+      data => {
+        this.items = data;
+        console.log("User's Items:", this.items);
+      }
+    );
+
     if(this.sellerAccount){
       console.log("this is not your profile");
       console.log(this.sellerAccount);
@@ -120,5 +134,19 @@ export class ProfileComponent implements OnInit {
       }
     )
     this.descriptionCollapsed = !this.descriptionCollapsed;
+  }
+
+  avatarCollapse() {
+    this.avatarCollapsed = !this.avatarCollapsed;
+  }
+
+  avatarSave() {
+    console.log("New avatar URL:", this.avatar);
+    this.accountService.updateAvatar(this.avatar, this.account.id).subscribe(
+      avatar => {
+        this.avatar = avatar;
+      }
+    );
+    this.avatarCollapsed = true;
   }
 }

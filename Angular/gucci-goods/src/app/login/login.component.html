@@ -6,10 +6,13 @@
     <input type="password" placeholder="password" [(ngModel)]="password" (keyup.enter)="login()"/>
     <input id="login-button" type="submit" value="login" (click)="login()"/>
 
+    <!-- Error message -->
+    <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
+
     <!-- Move Register button below Login -->
     <br>
     <a routerLink="/register">
-      <button id="register-button" class="btn btn-secondary">Register</button>
+      <button id="register-button" class="btn btn-secondary">sign up</button>
     </a>
   </div>
 </ng-container>

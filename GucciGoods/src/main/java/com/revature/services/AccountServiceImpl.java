@@ -48,6 +48,9 @@ public class AccountServiceImpl implements AccountService {
 	public void updateDescription(String newDescription, int id) {
 		ad.updateDescription(newDescription, id);
 	}
+	public void updateAvatar(String newAvatar, int id) {
+		ad.updateAvatar(newAvatar, id);
+	}
 	
 	public void deleteAccount(Account a) {
 		ad.delete(a);

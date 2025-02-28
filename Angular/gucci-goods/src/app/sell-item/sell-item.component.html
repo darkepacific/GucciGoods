@@ -1,5 +1,5 @@
 
-<button id="sell-item" (click) = "toggleCollapse()" class="btn btn-warning">Sell Item Here</button><br>
+<button id="sell-item" (click) = "toggleCollapse()" class="btn btn-warning">Sell Item</button><br>
 <!-- Add when this button is clicked all this appears*ngif = "!isCollapsed" --> 
 <div *ngIf = "!isCollapsed" class="clearfix" id="row" >
   <input type="text" placeholder="Item Name" [(ngModel)]="name"/>

@@ -13,5 +13,6 @@ public interface AccountService {
 	void updateLocation(String newLocation, int id);
 	void updatePhone(String newPhone, int id);
 	void updateDescription(String newDescription, int id);
+	void updateAvatar(String avatar, int id);
 	void deleteAccount(Account a);
 }

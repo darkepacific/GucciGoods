@@ -182,6 +182,21 @@ export class AccountService {
     );
   }
 
+  updateAvatar(newAvatar: string, id: number): Observable<string> {
+    const body = `newavatar=${newAvatar}&id=${id}`;
+    console.log("Updating avatar:", body);
+    return this.http.post(this.appUrl + '/avatar', body, { headers: this.headers, withCredentials: true }).pipe(
+      map(resp => {
+        const avatar = resp as string;
+        if (this.accountSubject.value) {
+          this.accountSubject.value.avatar = avatar;
+          this.saveAccountToStorage(this.accountSubject.value); // ✅ Save to local storage
+        }
+        return avatar;
+      })
+    );
+  }
+
   // 🔹 SELLER ACCOUNT HELPERS
 
   getSeller(): Account | null {

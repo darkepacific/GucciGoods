@@ -16,5 +16,7 @@ public interface ItemService {
 	
 	Item saveItem(Item m);
 	
+	List<Item> getItemsByUser(int userId);
+	
 	void deleteItem(Item m);
 }

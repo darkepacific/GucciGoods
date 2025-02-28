@@ -15,5 +15,5 @@ public interface AccountDAO {
 	void updateLocation(String newEmail, int id);
 	void updatePhone(String newEmail, int id);
 	void updateDescription(String newEmail, int id);
-	
+	void updateAvatar(String avatar, int id);
 }
