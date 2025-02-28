@@ -32,6 +32,16 @@ public class ItemHibernate implements ItemDAO{
 		s.close();
 		return m;
 	}
+	
+	@Override
+	public List<Item> getItemsByUser(int userId) {
+	    Session s = hu.getSession();
+	    Query query = s.createQuery("FROM Item WHERE account_id = :userId", Item.class);
+	    query.setParameter("userId", userId);
+	    List<Item> items = query.list();
+	    s.close();
+	    return items;
+	}
 
 	public Item getById(int i) {
 		Session s = hu.getSession();

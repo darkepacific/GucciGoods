@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CurrentUser } from 'src/app/shared/accounts/current-user';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AccountService } from 'src/app/shared/accounts/account.service';
 import { Account } from '../shared/accounts/account';
 
@@ -8,44 +7,52 @@ import { Account } from '../shared/accounts/account';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent implements OnInit {
-  public loggedAccount: Account;
-  public username: string;
-  public password: string;
+  public loggedAccount: Account | null = null;
+  public username: string = '';
+  public password: string = '';
+  public loginError: string = '';  // <-- Add this property for error messages
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.accountService.login(null,null).subscribe(
-      account=> {
-        this.loggedAccount = account;
-      }
-    )
+    if (this.accountService.isLoggedIn()) {
+      this.loggedAccount = this.accountService.getAccount();
+    } else {
+      this.accountService.login('', '').subscribe(account => {
+        if (account && account.username) {
+          this.loggedAccount = account;
+          this.cdr.detectChanges();
+        }
+      });
+    }
   }
 
   login(): void {
+    this.loginError = ''; // Reset error message before attempting login
+
     this.accountService.login(this.username, this.password).subscribe(
-      account=> {
-        this.loggedAccount = account;
-        if(this.loggedAccount !== null){
-          this.loggedAccount.username = account['username'];
-          console.log(this.loggedAccount.username);
-          console.log(account);
+      account => {
+        if (account && account.username) {
+          this.loggedAccount = account;
+          this.cdr.detectChanges();
+        } else {
+          this.loginError = 'Incorrect username or password.'; // Set error message if login fails
         }
+      },
+      error => {
+        this.loginError = 'Incorrect username or password.'; // Handle API errors
       }
-    )
+    );
   }
 
   logout(): void {
-    this.accountService.logout().subscribe();
-    this.loggedAccount=null;
-    this.username=null;
-    this.password=null;
+    this.accountService.logout().subscribe(() => {
+      this.loggedAccount = null;
+      this.username = '';
+      this.password = '';
+      this.loginError = ''; // Clear error on logout
+      this.cdr.detectChanges();
+    });
   }
-
-  // @HostListener('click')
-  sendAccount(): void{
-    
-   }
 }

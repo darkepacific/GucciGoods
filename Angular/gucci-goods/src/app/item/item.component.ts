@@ -20,7 +20,7 @@ export class ItemComponent implements OnInit {
   public account: Account;
   public sellerAccount: Account;
   public accountid: number;
-  public getItemReviews: ItemReview[];
+  public getItemReviews: ItemReview[] = [];
 
   constructor(private itemService: ItemService, private accountService: AccountService, private itemReviewService: ItemReviewService) { }
 

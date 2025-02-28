@@ -12,29 +12,33 @@ import com.revature.data.ItemDAO;
 @Service
 public class ItemServiceImpl implements ItemService {
 	@Autowired
-	private ItemDAO md;
+	private ItemDAO itemDAO;
 	
 	public Item getItemById(int i) {
-		return md.getById(i);
+		return itemDAO.getById(i);
 	}
 
 	public List<Item> getItems() {
-		return md.getAllItems();
+		return itemDAO.getAllItems();
 	}
 
 	public Item saveItem(Item m) {
-		return md.save(m);
+		return itemDAO.save(m);
 	}
 	
 	public Item update(Item m) {
-		return md.update(m);
+		return itemDAO.update(m);
 	}
 	public List<Item> getItemsByName(String name){
-		return md.getItemsByName(name);
+		return itemDAO.getItemsByName(name);
+	}
+	
+	public List<Item> getItemsByUser(int userId) {
+	    return itemDAO.getItemsByUser(userId);
 	}
 	
 	public void deleteItem(Item m) {
-		md.delete(m);
+		itemDAO.delete(m);
 	}
 	
 }

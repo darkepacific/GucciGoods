@@ -22,7 +22,7 @@ import com.revature.services.AccountService;
 public class LoginController {	
 	
 	@Autowired
-	private AccountService us;
+	private AccountService accountService;
 	
     private static Logger logger = Logger.getLogger(LoginController.class);
 
@@ -38,7 +38,7 @@ public class LoginController {
 		logger.info("Username: " + username);
 
 		
-		Account u = us.login(username, password);
+		Account u = accountService.login(username, password);
 
 		if(u != null) {
 			
@@ -57,21 +57,37 @@ public class LoginController {
 	@RequestMapping(value="/email", method=RequestMethod.POST)
 	public String updateEmail(@RequestParam("newemail") String email, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
 		logger.info("Email: " + email);
-		us.updateEmail(email, id);
+		accountService.updateEmail(email, id);
 		
-		Account u = us.getAccountById(id);
+		Account u = accountService.getAccountById(id);
 		session.setAttribute("loggedAccount", u);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(email);
 		return (jsonString);
 	}
 	
+	@RequestMapping(value="/avatar", method=RequestMethod.POST)
+	public String updateAvatar(@RequestParam("newavatar") String avatar, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
+	    logger.info("Avatar URL: " + avatar);
+	    accountService.updateAvatar(avatar, id);
+
+	    // Update session with new avatar
+	    Account u = accountService.getAccountById(id);
+	    session.setAttribute("loggedAccount", u);
+
+	    // Convert the updated avatar to JSON string and return
+	    ObjectMapper mapper = new ObjectMapper();
+	    String jsonString = mapper.writeValueAsString(avatar);
+	    return jsonString;
+	}
+
+	
 	@RequestMapping(value="/location", method=RequestMethod.POST)
 	public String updateLocation(@RequestParam("newlocation") String location, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
 		logger.info("Location: " + location);
-		us.updateLocation(location, id);
+		accountService.updateLocation(location, id);
 		
-		Account u = us.getAccountById(id);
+		Account u = accountService.getAccountById(id);
 		session.setAttribute("loggedAccount", u);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(location);
@@ -81,9 +97,9 @@ public class LoginController {
 	@RequestMapping(value="/phone", method=RequestMethod.POST)
 	public String updatePhone(@RequestParam("newphone") String phone, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
 		logger.info("Phone: " + phone);
-		us.updatePhone(phone, id);
+		accountService.updatePhone(phone, id);
 		
-		Account u = us.getAccountById(id);
+		Account u = accountService.getAccountById(id);
 		session.setAttribute("loggedAccount", u);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(phone);
@@ -93,9 +109,9 @@ public class LoginController {
 	@RequestMapping(value="/description", method=RequestMethod.POST)
 	public String updateDescription(@RequestParam("newdescription") String description, @RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
 		logger.info("Description: " + description);
-		us.updateDescription(description, id);
+		accountService.updateDescription(description, id);
 		
-		Account u = us.getAccountById(id);
+		Account u = accountService.getAccountById(id);
 		session.setAttribute("loggedAccount", u);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(description);
@@ -107,7 +123,7 @@ public class LoginController {
 		int aId = Integer.parseInt(id);
 		logger.info("Id: " + id);
 		
-		return us.getAccountById(aId);
+		return accountService.getAccountById(aId);
 		
 	}
 

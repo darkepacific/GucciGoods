@@ -1,11 +1,20 @@
 <ng-container *ngIf="!loggedAccount; else display">
-<img id="logo" src="/assets/GG_Logo.png"/>
-<h2>Sign in</h2>
-<div id="login" action="post" >
-  <input type="text" placeholder="username" [(ngModel)]="username"/>
-  <input type="password" placeholder="password" [(ngModel)]="password" (keyup.enter)="login()"/>
-  <input id="login-button" type="submit" value="login" (click)="login()"/>
-</div>
+  <img id="logo" src="/assets/GG_Logo.png"/>
+  <h2>Sign in</h2>
+  <div id="login">
+    <input type="text" placeholder="username" [(ngModel)]="username"/>
+    <input type="password" placeholder="password" [(ngModel)]="password" (keyup.enter)="login()"/>
+    <input id="login-button" type="submit" value="login" (click)="login()"/>
+
+    <!-- Error message -->
+    <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
+
+    <!-- Move Register button below Login -->
+    <br>
+    <a routerLink="/register">
+      <button id="register-button" class="btn btn-secondary">sign up</button>
+    </a>
+  </div>
 </ng-container>
 
 <ng-template #display>
@@ -15,25 +24,23 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <div>
-          <strong><span>Welcome {{loggedAccount.username}}!</span></strong>
+          <strong><span>Welcome {{ loggedAccount.username }}!</span></strong>
         </div>
       </li>
-      <div *ngIf='loggedAccount.admin == 1'>
+      <div *ngIf="loggedAccount.admin == 1">
         <br>
-        <span>Admin priveleges!</span> <br>
-        <div id="admin" action="post" >
-          <a routerLink="/admin" routerLinkActive="active"><button class="btn btn-warning">Admin View</button></a>
+        <span>Admin privileges!</span> <br>
+        <div id="admin">
+          <a routerLink="/admin"><button class="btn btn-warning">Admin View</button></a>
         </div>
         <br>
       </div>
 
       <li class="nav-item">
-        <a routerLink="/profile" routerLinkActive="active"><p><button class="btn btn-success">Profile</button></p></a>
+        <a routerLink="/profile"><button class="btn btn-success">Profile</button></a>
         <br>
         <button class="btn btn-danger" (click)="logout()">Logout</button>
-       
       </li>
     </ul>
   </div>
 </ng-template>
-  

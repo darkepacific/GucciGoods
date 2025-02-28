@@ -1,13 +1,17 @@
 <div class="bg-light clearfix">
   <nav>
-
     <a class="float-left" routerLink="/home" routerLinkActive="active" (click)="clear()">
         <img src="/assets/GG_Logo.png" id="logo" />
     </a>
-    <a class="float-right" routerLink="/login" routerLinkActive="active">Login</a>
-    <a *ngIf="!x" class="float-right" routerLink="/register" routerLinkActive="active">Register</a>
-    <a class="float-right" routerLink="/profile" routerLinkActive="active">Profile</a>
 
+    <!-- Show Login & Register only if user is NOT logged in -->
+    <a *ngIf="!account" class="float-right" routerLink="/login" routerLinkActive="active">Login</a>
+    <!-- <a *ngIf="!account" class="float-right" routerLink="/register" routerLinkActive="active">Register</a> -->
+
+    <!-- Show Profile & Logout only if user IS logged in -->
+    <a *ngIf="account" class="float-right" routerLink="/profile" routerLinkActive="active">Profile</a>
+    <a *ngIf="account" class="float-right" routerLink="/home" (click)="logout()">Logout</a>
   </nav>
 </div>
+
 <router-outlet></router-outlet>

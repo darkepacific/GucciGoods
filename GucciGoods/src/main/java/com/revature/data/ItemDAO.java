@@ -8,6 +8,8 @@ public interface ItemDAO {
 	Item save(Item m);
 
 	List<Item> getAllItems();
+	
+    List<Item> getItemsByUser(int userId);
 
 	Item getById(int i);
 

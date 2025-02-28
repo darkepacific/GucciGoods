@@ -105,7 +105,11 @@ export class ItemService {
     );
 
   }
-
+  
+  getItemsByUser(userId: number): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.appUrl}/user/${userId}`, { withCredentials: true });
+  }
+  
   //Setters and Getters (Non-Observables)
   //Sets the Current Item ID for easier page viewing
   setCurrentItem(id: string){

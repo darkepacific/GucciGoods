@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable, pipe, of } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Admin } from './admin';
@@ -9,7 +8,6 @@ import { CurrentUser } from './current-user';
 import { Account } from './account';
 import { UrlService } from '../url.service';
 import { Router } from '@angular/router';
-
 
 @Injectable({
   providedIn: 'root'
@@ -21,144 +19,191 @@ export class AccountService {
   private locationUrl = this.appUrl + '/location';
   private phoneUrl = this.appUrl + '/phone';
   private descriptionUrl = this.appUrl + '/description';
-  private headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
-  // private admin: Admin;
-  private account: Account;
-  private sellerAccount: Account;
-  private accs: Account[];
-  
-  constructor(private urlSource: UrlService, private http: HttpClient, private router: Router) { }
+  private headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
+  private accountSubject = new BehaviorSubject<Account | null>(this.loadAccountFromStorage()); // 🔹 Restores from localStorage
+  public account$ = this.accountSubject.asObservable(); // 🔹 Observable for UI updates
+
+  private sellerAccount: Account | null = null;
+  private accs: Account[] = [];
+
+  constructor(private urlSource: UrlService, private http: HttpClient, private router: Router) {}
+
+  // 🔹 LOGIN
   login(username: string, password: string): Observable<Account> {
-    console.log(username+' '+password);
-    if(username && password) {
-      
+    console.log(`${username} ${password}`);
+    if (username && password) {
       const body = `user=${username}&pass=${password}`;
       console.log(body);
-      return this.http.post(this.appUrl, body, {headers: this.headers, withCredentials: true})
-        .pipe(map(resp => {
+      return this.http.post(this.appUrl, body, { headers: this.headers, withCredentials: true }).pipe(
+        map(resp => {
           const account: Account = resp as Account;
-
-          this.account = account;
-
+          this.accountSubject.next(account); // 🔹 Update login state
+          this.saveAccountToStorage(account); // 🔹 Save to localStorage
           return account;
-        }));
+        })
+      );
     } else {
-      return this.http.get(this.appUrl, {withCredentials: true})
-        .pipe(map(resp => {
+      return this.http.get(this.appUrl, { withCredentials: true }).pipe(
+        map(resp => {
           const account: Account = resp as Account;
-          this.account = account;
+          this.accountSubject.next(account); // 🔹 Update login state
+          this.saveAccountToStorage(account); // 🔹 Save to localStorage
           return account;
-        }));
+        })
+      );
     }
   }
 
+  // 🔹 LOGOUT
   logout(): Observable<Object> {
     return this.http.delete(this.appUrl, { withCredentials: true }).pipe(
-      map(success=> {
-        this.account = null;
+      map(success => {
+        this.accountSubject.next(null); // 🔹 Clear login state
+        this.clearAccountFromStorage(); // 🔹 Remove from localStorage
         console.log("Logged out");
         return success;
       })
     );
   }
 
-  getSellerAccount(id: string): Observable<Account>{
-    return this.http.get(this.appUrl+'/'+id, { withCredentials: true }).pipe(
-      map(resp=> {
-        const sellerAccount = resp as Account;
-        this.sellerAccount = sellerAccount;
-        console.log("Grabbed seller account");
-        console.log(this.sellerAccount);
+  // 🔹 CHECK LOGIN STATUS
+  getAccount(): Account | null {
+    return this.accountSubject.value;
+  }
+
+  isLoggedIn(): boolean {
+    return this.accountSubject.value !== null;
+  }
+
+  // 🔹 PERSIST LOGIN STATE
+  private saveAccountToStorage(account: Account): void {
+    localStorage.setItem('loggedAccount', JSON.stringify(account));
+  }
+
+  private loadAccountFromStorage(): Account | null {
+    const storedAccount = localStorage.getItem('loggedAccount');
+    return storedAccount ? JSON.parse(storedAccount) : null;
+  }
+
+  private clearAccountFromStorage(): void {
+    localStorage.removeItem('loggedAccount');
+  }
+
+  // 🔹 ACCOUNT MANAGEMENT
+
+  getAccounts(): Observable<Account[]> {
+    return this.http.get(this.adminUrl, { withCredentials: true }).pipe(
+      map(resp => {
+        this.accs = resp as Account[];
+        console.log("Accounts fetched:", this.accs);
+        return this.accs;
+      })
+    );
+  }
+
+  deleteAccount(id: string): Observable<Object> {
+    return this.http.delete(`${this.adminUrl}/${id}`, { withCredentials: true }).pipe(
+      map(success => {
+        console.log("Account deleted");
+        return success;
+      })
+    );
+  }
+
+  getSellerAccount(id: string): Observable<Account> {
+    return this.http.get(`${this.appUrl}/${id}`, { withCredentials: true }).pipe(
+      map(resp => {
+        this.sellerAccount = resp as Account;
+        console.log("Grabbed seller account:", this.sellerAccount);
         this.router.navigateByUrl('seller-profile');
         return this.sellerAccount;
       })
     );
   }
 
-  updateEmail( newemail : string, id: number ): Observable<String>{
-    console.log("In updateEmail in account.service.");
-    const body = `newemail=${newemail}&id=${id}`;
-    console.log(body);
-    return this.http.post(this.emailUrl, body, {headers: this.headers, withCredentials: true})
-      .pipe(map(resp => {
-        const email: string = resp as string;
-        console.log("IN UPDATEEMAIL response" + email);
-        this.account.email = email;
+  updateEmail(newEmail: string, id: number): Observable<string> {
+    const body = `newemail=${newEmail}&id=${id}`;
+    console.log("Updating email:", body);
+    return this.http.post(this.emailUrl, body, { headers: this.headers, withCredentials: true }).pipe(
+      map(resp => {
+        const email = resp as string;
+        if (this.accountSubject.value) {
+          this.accountSubject.value.email = email;
+          this.saveAccountToStorage(this.accountSubject.value); // 🔹 Update localStorage
+        }
         return email;
-      }));
-  }
-
-  updateLocation( newlocation : string, id: number ): Observable<String>{
-    console.log("In updateEmail in account.service.");
-    const body = `newlocation=${newlocation}&id=${id}`;
-    console.log(body);
-    return this.http.post(this.locationUrl, body, {headers: this.headers, withCredentials: true})
-      .pipe(map(resp => {
-        const location: string = resp as string;
-        console.log("IN UPDATEEMAIL response" + location);
-        this.account.location = location;
-        return location;
-      }));
-  }
-
-  updatePhone( newphone : string, id: number ): Observable<String>{
-    console.log("In updateEmail in account.service.");
-    const body = `newphone=${newphone}&id=${id}`;
-    console.log(body);
-    return this.http.post(this.phoneUrl, body, {headers: this.headers, withCredentials: true})
-      .pipe(map(resp => {
-        const phone: string = resp as string;
-        console.log("IN UPDATEEMAIL response" + phone);
-        this.account.phone = phone;
-        return phone;
-      }));
-  }
-
-  updateDescription( newdescription : string, id: number ): Observable<String>{
-    console.log("In updateEmail in account.service.");
-    const body = `newdescription=${newdescription}&id=${id}`;
-    console.log(body);
-    return this.http.post(this.descriptionUrl, body, {headers: this.headers, withCredentials: true})
-      .pipe(map(resp => {
-        const description: string = resp as string;
-        console.log("IN UPDATEEMAIL response" + description);
-        this.account.description = description;
-        return description;
-      }));
-  }
-
-  getAccounts(): Observable<Account[]> {
-    return this.http.get(this.adminUrl, {withCredentials: true})
-    .pipe(map(resp => {
-      const accs: Account[] = resp as Account[];
-      this.accs = accs;
-      console.log("Accs" + accs);
-      return accs;
-    }));
-  }
-
-  deleteAccount(id: string): Observable<Object> {
-    return this.http.delete(this.adminUrl+'/'+id, { withCredentials: true }).pipe(
-      map(success=> {
-        this.account = null;
-        console.log("Account deleted");
-        return success;
       })
     );
   }
-  
-  getSeller(): Account {
-    return this.sellerAccount;
-  }
-  clearSeller(): void {
-    this.sellerAccount = null;
-  }
-  getAccount(): Account {
-    return this.account;
+
+  updateLocation(newLocation: string, id: number): Observable<string> {
+    const body = `newlocation=${newLocation}&id=${id}`;
+    console.log("Updating location:", body);
+    return this.http.post(this.locationUrl, body, { headers: this.headers, withCredentials: true }).pipe(
+      map(resp => {
+        const location = resp as string;
+        if (this.accountSubject.value) {
+          this.accountSubject.value.location = location;
+          this.saveAccountToStorage(this.accountSubject.value); // 🔹 Update localStorage
+        }
+        return location;
+      })
+    );
   }
 
-  isAccount(): boolean {
-    return (this.account!== undefined && this.account!== null);
+  updatePhone(newPhone: string, id: number): Observable<string> {
+    const body = `newphone=${newPhone}&id=${id}`;
+    console.log("Updating phone:", body);
+    return this.http.post(this.phoneUrl, body, { headers: this.headers, withCredentials: true }).pipe(
+      map(resp => {
+        const phone = resp as string;
+        if (this.accountSubject.value) {
+          this.accountSubject.value.phone = phone;
+          this.saveAccountToStorage(this.accountSubject.value); // 🔹 Update localStorage
+        }
+        return phone;
+      })
+    );
+  }
+
+  updateDescription(newDescription: string, id: number): Observable<string> {
+    const body = `newdescription=${newDescription}&id=${id}`;
+    console.log("Updating description:", body);
+    return this.http.post(this.descriptionUrl, body, { headers: this.headers, withCredentials: true }).pipe(
+      map(resp => {
+        const description = resp as string;
+        if (this.accountSubject.value) {
+          this.accountSubject.value.description = description;
+          this.saveAccountToStorage(this.accountSubject.value); // 🔹 Update localStorage
+        }
+        return description;
+      })
+    );
+  }
+
+  updateAvatar(newAvatar: string, id: number): Observable<string> {
+    const body = `newavatar=${newAvatar}&id=${id}`;
+    console.log("Updating avatar:", body);
+    return this.http.post(this.appUrl + '/avatar', body, { headers: this.headers, withCredentials: true }).pipe(
+      map(resp => {
+        const avatar = resp as string;
+        if (this.accountSubject.value) {
+          this.accountSubject.value.avatar = avatar;
+          this.saveAccountToStorage(this.accountSubject.value); // ✅ Save to local storage
+        }
+        return avatar;
+      })
+    );
+  }
+
+  // 🔹 SELLER ACCOUNT HELPERS
+
+  getSeller(): Account | null {
+    return this.sellerAccount;
+  }
+
+  clearSeller(): void {
+    this.sellerAccount = null;
   }
 }
