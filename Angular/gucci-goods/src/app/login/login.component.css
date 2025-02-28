@@ -46,3 +46,18 @@ h2 {
     background-color: #00cc00;
     color: white;
 }
+
+#register-button {
+    color: white;
+    border-color: #007bff;
+    background-color: #007bff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+#register-button:hover {
+    background-color: #0056b3;
+}

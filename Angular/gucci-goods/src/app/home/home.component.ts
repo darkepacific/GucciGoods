@@ -60,9 +60,9 @@ export class HomeComponent implements OnInit, OnDestroy {
        
       }
       else{
-        //this.item = this.items[0];
-        //let tempId = this.items[0].id as any;
-        //this.setItem(tempId as string);
+        // this.item = this.items[0];
+        // let tempId = this.items[0].id as any;
+        // this.setItem(tempId as string);
       }
       
     }
