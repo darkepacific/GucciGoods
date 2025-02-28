@@ -3,9 +3,10 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-		<property name="hibernate.connection.url">jdbc:oracle:thin:@darke-db.cgkmixlhifbl.us-east-2.rds.amazonaws.com:1521:ORCL</property>
-		<property name="hibernate.connection.username">dja</property>
-		<property name="hibernate.connection.password">iadp7640</property>
+		<!-- <property name="hibernate.connection.url">jdbc:oracle:thin:@darke-db.cgkmixlhifbl.us-east-2.rds.amazonaws.com:1521:ORCL</property> -->
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521/orclpdb1.localdomain</property>
+		<property name="hibernate.connection.username">system</property>
+		<property name="hibernate.connection.password">newpassword</property>
 		
 		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property> <!--10g-->
 		
