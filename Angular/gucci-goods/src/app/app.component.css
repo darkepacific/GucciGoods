@@ -45,11 +45,12 @@ nav {
 
 /* Right-side buttons */
 nav a {
-    margin-left: 15px;
-    color: #333;
+    margin-left: 25px;
+    /* color: #333; */
+    color: darkolivegreen;
     text-decoration: none;
     font-size: 14px;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 /* -----------------------
