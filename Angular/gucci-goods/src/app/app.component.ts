@@ -11,11 +11,21 @@ import { Account } from './shared/accounts/account';
 export class AppComponent implements OnInit {
   title = 'gucci-goods';
   public account: Account | null = null;
+  categories: string[] = [
+    'Electronics', 'Fashion', 'Home & Kitchen', 'Toys & Games', 
+    'Sports', 'Books', 'Beauty', 'Groceries', 'Automotive', 'Health'
+  ];
+
 
   constructor(
     private accountService: AccountService,
     private router: Router
   ) {}
+
+  searchCategory(category: string): void {
+    console.log("Searching for:", category);
+    this.router.navigate(['/home'], { queryParams: { q: category } });
+  }
 
   ngOnInit() {
     // 🔹 Subscribe to account$ to automatically update UI when login state changes

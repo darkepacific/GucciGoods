@@ -1,57 +1,94 @@
-button {
-    background-color: #00cc00;
-    border-color:  #00cc00;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    width: 12%;
- }
- 
- form {
-    margin-right: auto;
-    margin-left: auto;
-    width: 60%;
+/* Wrap the search input & button */
+.search-wrapper {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   /* max-width: 3000px; */
+   border: 2px solid #d1d1d1;
+   border-radius: 8px;
+   overflow: hidden;
+   background-color: #fff;
  }
 
- .fa-search {
-    color: white;
+ /* Let the ng2-completer expand */
+.search-wrapper ng2-completer {
+   flex: 1 1 auto; 
+   min-width: 100;       /* prevents the default min-width from blocking shrink */
  }
  
- input:focus {
-    outline-color: #00cc00;
+ :host {
+   display: block;  /* or display: flex */
+   width: 80%;
+ }
+ 
+ /* Input field should take full width */
+ :host >>> .completer-input {
+   flex-grow: 1;
+   border: none;
+   padding: 14px;
+   font-size: 16px;
+   outline: none;
+   width: 100%;
+   background-color: #fff;
+   color: #333;
+ }
+ 
+ /* Properly align the search button */
+ .search-btn {
+   background-color: #00cc00;
+   border: none;
+   padding: 18px 24px;
+   cursor: pointer;
+   transition: background 0.3s ease-in-out;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-top-right-radius: 5px;
+   border-bottom-right-radius: 5px;
+ }
+ 
+ /* Search button hover effect */
+ .search-btn:hover {
+   background-color: #00bb00;
+ }
+ 
+ /* White search icon */
+ .fa-search {
+   color: white;
+   font-size: 18px;
  }
 
  :host >>> .completer-holder {
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    float: left;
- }
- 
- :host >>> .completer-input{
-    width: 100%;
-    padding-top: 15px;
-    padding-bottom: 14px;
-    padding-left: 12px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
- }
- #search-form {
-    margin-top: 5%;
- }
- ng2-completer{
-    display: block;
-    overflow: auto;
-    float: left;
-    width: 88%;
- }
+   width: 100%;
+   margin-right: auto;
+   margin-left: auto;
+   float: left;
+}
 
- :host >>> .completer-dropdown {
-    width: 52.8% !important;
- }
- 
- :host >>> .completer-dropdown > * {
-    width: 97%;
- }
+:host >>> .completer-input{
+   width: 100%;
+   padding-top: 15px;
+   padding-bottom: 14px;
+   padding-left: 12px;
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+}
+/* #search-form {
+   margin-top: 5%;
+} */
+
+/* ng2-completer{
+   display: block;
+   overflow: auto;
+   float: left;
+   width: 88%;
+} */
+
+:host >>> .completer-dropdown {
+   width: 52% !important;
+}
+
+/* :host >>> .completer-dropdown > * {
+   width: 97%;
+} */
  

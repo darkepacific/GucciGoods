@@ -1,17 +1,34 @@
 <div class="bg-light clearfix">
+  <!-- 🔹 Navbar (single row) -->
   <nav>
-    <a class="float-left" routerLink="/home" routerLinkActive="active" (click)="clear()">
+    <!-- Left: Logo -->
+    <div class="left-nav">
+      <a routerLink="/home" routerLinkActive="active" (click)="clear()">
         <img src="/assets/GG_Logo.png" id="logo" />
-    </a>
+      </a>
+    </div>
 
-    <!-- Show Login & Register only if user is NOT logged in -->
-    <a *ngIf="!account" class="float-right" routerLink="/login" routerLinkActive="active">Login</a>
-    <!-- <a *ngIf="!account" class="float-right" routerLink="/register" routerLinkActive="active">Register</a> -->
+    <!-- Center: Search Bar -->
+    <div class="center-nav">
+      <app-search (resultEvent)="receiveResult($event)"></app-search>
+    </div>
 
-    <!-- Show Profile & Logout only if user IS logged in -->
-    <a *ngIf="account" class="float-right" routerLink="/profile" routerLinkActive="active">Profile</a>
-    <a *ngIf="account" class="float-right" routerLink="/home" (click)="logout()">Logout</a>
+    <!-- Right: Buttons -->
+    <div class="right-nav nav-links">
+      <a *ngIf="!account" routerLink="/login" routerLinkActive="active">Login</a>
+      <a *ngIf="account" routerLink="/profile" routerLinkActive="active">Profile</a>
+      <a *ngIf="account" routerLink="/home" (click)="logout()">Logout</a>
+    </div>
   </nav>
+
+  <!-- 🔹 Category Bar -->
+  <div class="top-nav">
+    <ul class="category-list">
+      <li *ngFor="let category of categories" (click)="searchCategory(category)">
+        {{ category }}
+      </li>
+    </ul>
+  </div>
 </div>
 
 <router-outlet></router-outlet>
