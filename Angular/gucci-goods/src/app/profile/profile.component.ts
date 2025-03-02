@@ -149,4 +149,14 @@ export class ProfileComponent implements OnInit {
     );
     this.avatarCollapsed = true;
   }
+
+  refreshItems(): void {
+    console.log("Refreshing items...");
+    this.itemService.getItemsByUser(this.account.id).subscribe(
+      data => {
+        this.items = data;
+        console.log("Updated User's Items:", this.items);
+      }
+    );
+  }
 }

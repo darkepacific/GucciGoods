@@ -27,8 +27,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getItem(this.getRandomArbitrary(1,4));
-    this.getItem2(this.getRandomArbitrary(4,7));
-    this.getItem3(this.getRandomArbitrary(7,10));
+    this.getItem2(this.getRandomArbitrary(4,10));
+    this.getItem3(this.getRandomArbitrary(10,19));
     this.flag = true;
     this.items = this.itemService.getStored();
     this.timer = Observable.timer(0,50);

@@ -24,7 +24,9 @@ export class AppComponent implements OnInit {
 
   searchCategory(category: string): void {
     console.log("Searching for:", category);
-    this.router.navigate(['/search'], { queryParams: { q: category } });
+    // 🔹 Replace "&" with "and" before sending to the backend
+    let formattedCategory = category.replace("&", "");
+    this.router.navigate(['/search'], { queryParams: { q: formattedCategory } });
   }
 
   ngOnInit() {

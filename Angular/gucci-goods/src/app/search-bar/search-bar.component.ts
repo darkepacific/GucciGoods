@@ -56,21 +56,27 @@ export class SearchBarComponent implements OnInit {
 
   search(event?: Event): void {
     if (event) {
-      event.preventDefault(); // Prevent full-page reload
+        event.preventDefault(); // Prevent full-page reload
     }
 
-    // Trim & check if user typed something
+    // Trim input & check if user typed something
     if (this.query.trim()) {
-      // Perform the search via your service
-      this.searchService.search(this.query).subscribe(items => {
-        // Store results in itemService
-        this.itemService.setStored(items);
+        // 🔹 Replace "&" with "and"
+        let formattedQuery = this.query.replace("&", "");
 
-        // Navigate to /search, possibly with query param
-        this.router.navigate(['/search'], { queryParams: { q: this.query } });
-      });
+        console.log("Formatted search query:", formattedQuery);
+
+        // Perform the search via your service
+        this.searchService.search(formattedQuery).subscribe(items => {
+            // Store results in itemService
+            this.itemService.setStored(items);
+
+            // Navigate to /search with formatted query param
+            this.router.navigate(['/search'], { queryParams: { q: formattedQuery } });
+        });
     }
-  }
+}
+
   
   printStored(){
     console.log("Search Result: " + this.result);
