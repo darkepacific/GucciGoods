@@ -10,7 +10,7 @@ import { Item } from '../shared/items/item';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  public loggedAccount: Account;
+  public loggedAccount: Account | null = null;
   public accountId: string;
   public accs: Account[];
   public items: Item[];

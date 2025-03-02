@@ -1,6 +1,13 @@
 <ng-container>
-  <div id="admin">
-    <table class="table">
+  <div *ngIf="loggedAccount.admin == 1">
+    <br>
+    <div id="admin">
+      <p>Admin privileges!</p>
+    </div>
+    <br>
+
+    <div id="admin">
+      <table class="table">
         <thead class="thead-light">
           <tr>
             <th scope="col">Id</th>
@@ -25,14 +32,14 @@
 
       <br>
       <!--
-      <div id="load" action="post" >
-         <button class="btn btn-secondary" id="load-button"  type="submit" (click)="getAccounts()">Load</button>
-      </div>
-      --> 
+        <div id="load" action="post" >
+          <button class="btn btn-secondary" id="load-button"  type="submit" (click)="getAccounts()">Load</button>
+        </div>
+        -->
 
       <div id="items">
         <h4> Existing Items</h4>
-      <table class="table">
+        <table class="table">
           <thead class="thead-light">
             <tr>
               <th scope="col">Id</th>
@@ -45,37 +52,37 @@
           </thead>
           <tr *ngFor="let item of items">
             <a routerLink="/item" routerLinkActive="active" (click)="setItem(item.id)"> <!-- (click)="set item" -->
-            <th scope="row">{{item.id}}</th>
+              <th scope="row">{{item.id}}</th>
             </a>
-              <td>{{item.name}}</td>
-              <td>{{item.tags}}</td>
-              <td>{{item.cost}}</td>
-              <td>{{item.item_description}}</td>
-              <td><img src="{{item.image}}" height="50"/></td>
+            <td>{{item.name}}</td>
+            <td>{{item.tags}}</td>
+            <td>{{item.cost}}</td>
+            <td>{{item.item_description}}</td>
+            <td><img src="{{item.image}}" height="50" /></td>
           </tr>
         </table>
-  
+
       </div>
       <br>
 
       <div id="Back">
-          <a routerLink="/login" routerLinkActive="active"><button class="btn btn-warning">Back</button></a>
+        <a routerLink="/login" routerLinkActive="active"><button class="btn btn-warning">Back</button></a>
       </div>
 
       <div id="accountId" action="delete">
         <input type="text" placeholder="account id" [(ngModel)]="accountId" (keydown.enter)="deleteAccount()" />
       </div>
-  
+
       <div id="Delete">
         <button class="btn btn-danger" (click)="deleteAccount()">Delete Account</button>
       </div>
-  
+
       <div id="itemId" action="delete">
-        <input type="text" placeholder="item id" [(ngModel)]="itemId" (keydown.enter)="deleteItem()"/>
+        <input type="text" placeholder="item id" [(ngModel)]="itemId" (keydown.enter)="deleteItem()" />
       </div>
       <div id="Delete">
         <button class="btn btn-danger" (click)="deleteItem()">Delete Item</button>
       </div>
-
     </div>
+  </div>
 </ng-container>

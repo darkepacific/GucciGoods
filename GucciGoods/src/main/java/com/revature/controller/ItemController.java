@@ -120,7 +120,7 @@ public class ItemController {
 
 	        int score = 0;
 
-	     // 🔹 Direct name & tag matching
+	     //  Direct name & tag matching
 	        for (String qToken : queryTokens) {
 	            for (String token : nameTokens) {
 	                if (isMatch(qToken, token)) score += 10; // Exact name match
@@ -141,13 +141,13 @@ public class ItemController {
 	            score += 25;
 	        }
 
-	        // 🔹 Synonym-based matching: if the query contains "fashion" and the item name contains "gucci" or similar, add bonus points. 
+	        //  Synonym-based matching: if the query contains "fashion" and the item name contains "gucci" or similar, add bonus points. 
 	        // Compute bonus based on the normalized item name and normalized query.
 	        Map<String, String[]> synonymMapping = getSynonymMapping();
 	        score += computeSynonymBonus(queryTokens, normalizedName, synonymMapping, 10);
 	        score += computeSynonymBonus(queryTokens, normalizedTags, synonymMapping, 8);
 
-	        // 🔹 Special Handling for Books
+	        //  Special Handling for Books
 	        if (normalizedQuery.contains("book") || normalizedQuery.contains("books")) {
 	            if (normalizedTags.contains("book") || normalizedTags.contains("novel") || normalizedTags.contains("kindle")) {
 	                score += 15;  // Strong match for book-related tags
@@ -161,7 +161,7 @@ public class ItemController {
 	            }
 	        }
 	        
-	        // 🔹 Special Handling for Games
+	        //  Special Handling for Games
 	        if (normalizedQuery.contains("game") || normalizedQuery.contains("games")) {
 	            if (normalizedName.contains("tv")) {
 	                score -= 10;
@@ -171,7 +171,7 @@ public class ItemController {
 	            }
 	        }
 	        
-	     // 🔹 Special Handling for Kithchen
+	     //  Special Handling for Kithchen
 	        if (normalizedQuery.contains("kitchen")) {
 	            if (normalizedName.contains("kit") && !(normalizedName.contains("kitchen"))) {
 	                score -= 10;
@@ -181,17 +181,17 @@ public class ItemController {
 	            }
 	        }
 	        
-	        // 🔹 Special Handling for Macbooks
+	        //  Special Handling for Macbooks
 	        if (normalizedQuery.contains("macbook")) {
-	            if (normalizedName.contains("book")) {
+	            if (normalizedName.contains("book")  && !(normalizedName.contains("ma"))) {
 	                score -= 10;
 	            }
-	            if (normalizedTags.contains("book")) {
+	            if (normalizedTags.contains("book")  && !(normalizedName.contains("mac"))) {
 	                score -= 10;
 	            }
 	        }
 	        
-	        // 🔹 Special Handling for Health
+	        //  Special Handling for Health
 	        if (normalizedQuery.contains("health")) {
 	            if (normalizedName.contains("book")) {
 	                score -= 20;
@@ -202,7 +202,7 @@ public class ItemController {
 	        }
 
 	        
-	        // 🔹 Special Handling for Sports
+	        //  Special Handling for Sports
 	        if (normalizedQuery.contains("sports") || normalizedQuery.contains("sport")) {
 	            if (normalizedTags.contains("game") && 
 	                !(normalizedTags.contains("team") || normalizedTags.contains("competition") || normalizedTags.contains("match") || normalizedTags.contains("tournament"))) {
@@ -218,7 +218,7 @@ public class ItemController {
 	            }
 	        }
 	        
-	     // 🔹 Special Handling for Automotive and Car
+	     //  Special Handling for Automotive and Car
 	        if (normalizedQuery.contains("automotive") || normalizedQuery.contains("car")) {
 	            if (normalizedName.contains("care") || normalizedName.contains("bear")) {
 	                score -= 15;
@@ -357,7 +357,7 @@ public class ItemController {
 	        "charger", "cable", "hardware", "processor", "console", "apple",
 	        "samsung", "dell", "hp", "lenovo", "sony", "huawei", "microsoft",
 	        "google", "amazon", "fire tv", "kindle", "smart home", "wifi",
-	        "battery", "bluetooth"
+	        "battery", "bluetooth", "router", "wireless"
 	    });
 
 	    synonyms.put("home", new String[]{
@@ -418,7 +418,7 @@ public class ItemController {
 	        "cheese", "yogurt", "bread", "cookies", "soda", "juice"
 	    });
 	    
-	    // 🔹 Toys
+	    //  Toys
 	    synonyms.put("toys", new String[]{
 	        "games", "board games", "video games", "puzzles", "lego", 
 	        "dolls", "action figures", "playset", "fun", "collectibles", "plush", 
@@ -441,7 +441,7 @@ public class ItemController {
 		        "educational toys", "learning games", "puzzles", "wooden toys", "science kits"
 		    });
 
-	    // 🔹 Books
+	    //  Books
 	    synonyms.put("books", new String[]{
 	        "novel", "fiction", "nonfiction", "mystery", "thriller", "biography", 
 	        "autobiography", "memoir", "history", "textbook", "education", "learning",
@@ -449,7 +449,7 @@ public class ItemController {
 	        "classic", "bestseller", "author", "paperback", "hardcover", "ebook", "audiobook", 
 	        "self-help", "business books", "philosophy", "young adult", "children’s books", 
 	        "graphic novel", "manga", "comic book", "cookbook", "encyclopedia", "library",
-	        "amazon kindle", "barnes & noble", "new york times bestseller", "bookstore",
+	        "amazon kindle", "barnes", "noble", "new york times", "bookstore",
 	        "kindle books", "storytelling", "narrative", "literary", "manuscript"
 	    });
 	    
