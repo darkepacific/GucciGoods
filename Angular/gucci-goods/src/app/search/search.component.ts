@@ -1,91 +1,45 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CompleterService, CompleterData } from 'ng2-completer';
-import { SearchService } from '../shared/search/search.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Item } from '../shared/items/item';
-import {Router} from '@angular/router';
 import { ItemService } from '../shared/items/item.service';
-
+import { SearchService } from '../shared/search/search.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-
 export class SearchComponent implements OnInit {
-  protected query: string;
-  public result: Item[] = this.itemService.getStored();
-  @Output() resultEvent = new EventEmitter<Item[]>();
+  public items: Item[] = [];
+  public query: string = '';
 
-  public commonItem: String[];
-  commonItems = ["Acer", "Acer Laptop", "AirPods", "Amazon Kindle", "Amiibo", "Apple",
-                  "Battery Pack", "Bluetooth Headphones", "Bluetooth Speakers",
-                  "Car Phone Mount", "Charging Station", "Cologne", "Crocs", "Cup Holder",
-                  "Dash Cam", "Desk Fan", "Disney Phone Case", "Drone",
-                  "Earphones", "Echo", "Electric Toothbrush",
-                  "Fashion Nova", "Fire Stick", "Fitbit", "Fortnite",
-                  "Gift Card", "Glasses", "Gucci", "Gucci Belt",
-                  "Harry Potter", "HDMI","Headphones", "Huawei", "Huawei Matebook",
-                  "iPhone", "iPhone X", "iPhone 8", "iPhone Screen Protector",
-                  "Jenga", "Journal", "Juicer", "Juul",
-                  "Kate Spade", "Kindle", "Kindle Fire",
-                  "Laptop", "Lego", "Lego Star Wars", "LG TV",
-                  "Macbook", "Macbook Air", "Macbook Pro", "Marvel", "Mask", "Monster Hunter",
-                  "Nike", "Nintendo Switch", "Nintendo Amiibo", "Note 9",
-                  "Office Chair", "Ogx Shampoo", "Otterbox",
-                  "Playstation", "Playstation Card", "Pokemon", "Polo",
-                  "Qi Wireless Charger", "Queen Bed Frame",
-                  "Roku", "Roku Premiere", "Rolex",
-                  "Samsung Galaxy", "Spiderman", "Switch",
-                  "Tablet", "TV", "TV Mount", "Thank You Cards",
-                  "Umbrella", "USB", "Unicorn",
-                  "Vans", "Versace", "Versace Cologne", "Victoria's Secret",
-                  "Warcraft", "Water Bottle", "Wifi Router", "Wireless Earbuds", "Wyze Camera",
-                  "Xbox", "Xbox Card", "Xbox One",
-                  "Yankee Candle", "Yoga Mat", "Yeti Tumbler",
-                  "Zero Gravity Chair","Zip Ties", "Zippo Lighter"];
-
-  constructor(private completerService: CompleterService, private itemService: ItemService,
-     private searchService: SearchService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private itemService: ItemService,
+    private searchService: SearchService
+  ) {}
 
   ngOnInit() {
-    //this.searchService.results.subscribe(results => this.result = results)
-    //this.result = this.itemService.getStored();
-    //console.log("PRINTING " + this.result);
+    // 1) Read from itemService by default
+    this.items = this.itemService.getStored() || [];
+
+    // 2) Optionally read query param & re-run search
+    this.route.queryParamMap.subscribe(params => {
+      const q = params.get('q') || '';
+      this.query = q.trim();
+
+      // If user reloaded the page on /search?q=..., we can re-fetch
+      if (this.query) {
+        this.searchService.search(this.query).subscribe(data => {
+          this.items = data;
+          this.itemService.setStored(data);
+        });
+      }
+    });
   }
 
-  search(): void{
-    console.log(this.query);
-    if(! (this.query == " ") ){
- 
-      this.searchService.search(this.query).subscribe(
-        data=> {
-          this.result = data;
-          console.log(this.result);
-          this.itemService.setStored(this.result);
-          this.printStored();
-
-          this.router.navigateByUrl('home');
-          
-          //this.resultEvent.emit(this.result);    
-          }
-      )      
-    }
+  setItem(id: string): void {
+    // If you need to store the "current item" for detail page
+    this.itemService.setCurrentItem(id);
   }
-  
-  printStored(){
-    console.log("Search Result: " + this.result);
-  }
-  
-   /*search() {
-    console.log(this.query)
-
-    if(! (this.query == " " || this.query == "  ") ){
-      this.searchService.search(this.query);
-    }
-    console.log(this.result);
-  }*/
-
-   //window.location.href = "http://localhost:4200/home"; 
 }
-     

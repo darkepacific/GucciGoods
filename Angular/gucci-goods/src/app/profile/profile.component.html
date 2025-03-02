@@ -82,8 +82,9 @@
 
     <!-- Centered Sell Button -->
     <div id="sell-item-container">
-        <app-sell-item></app-sell-item>
+        <app-sell-item (itemAdded)="refreshItems()"></app-sell-item>
     </div>
+    
 
     <!-- User's Items List -->
     <div id="user-items">

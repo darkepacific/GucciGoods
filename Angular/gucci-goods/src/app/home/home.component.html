@@ -1,10 +1,8 @@
-<!-- <app-search (resultEvent)="receiveResult($event)"></app-search> -->
 <br>
 <!--button type="submit" class="submit" (click)="printStored()">printStored</button>-->
-<br>
 <ng-container *ngIf="this.items == undefined || this.items.length == 0; else results">
 <div id="hot">
-    <h3 style="text-align: center; color: rgb(247, 173, 15);">Hot Buys</h3>
+    <h3 style="text-align: center; color: rgb(247, 173, 15);">🔥 Hot Buys 🔥</h3>
     <br>
     <a routerLink="/item" routerLinkActive="active" (click)="setItem(item.id)"><app-itemsmall [itemSmall]="item"></app-itemsmall></a>  <!-- setItem() -->
     <br>
@@ -14,18 +12,3 @@
 </div>
     <br>
 </ng-container>
-
-<ng-template #results>
-    <h3 style="text-align: center; color: rgb(45, 45,45);">Results</h3>
-
-    <div *ngFor="let i of items">
-    <br>
-    <a routerLink="/item" routerLinkActive="active" (click)="setItem(i.id)"><app-itemsmall [itemSmall]="i"></app-itemsmall></a>  <!-- setItem() -->
-    </div>
-    <br>
-</ng-template>
-
-<!--   <br>
-    <app-itemsmall [item2]="item"></app-itemsmall>  
-    <br>
-    <app-itemsmall [item2]="item"></app-itemsmall>  -->

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ItemComponent } from './item/item.component';
 import { SearchComponent } from './search/search.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     ItemComponent,
     SearchComponent,
+    SearchBarComponent,
     LoginComponent,
     RegisterComponent,
     AdminComponent,
