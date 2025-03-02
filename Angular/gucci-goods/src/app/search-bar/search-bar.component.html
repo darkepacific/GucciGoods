@@ -1,0 +1,13 @@
+<form (sumbit)=search($event) id="search-form" autocomplete="off" action="search" method="GET">
+  <div class="search-wrapper">
+    <ng2-completer [(ngModel)]="query" name="query" [datasource]="commonItems" 
+      [minSearchLength]="1" [placeholder]="'Search...'" 
+      [textNoResults]="'No Suggestions Found.'" [maxChars]="64" 
+      [selectOnClick]="'true'" (keyup.enter)="search($event)">
+    </ng2-completer>
+
+    <button type="submit" class="search-btn" (click)="search()">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+</form>

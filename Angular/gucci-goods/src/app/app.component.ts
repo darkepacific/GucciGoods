@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   searchCategory(category: string): void {
     console.log("Searching for:", category);
-    this.router.navigate(['/home'], { queryParams: { q: category } });
+    this.router.navigate(['/search'], { queryParams: { q: category } });
   }
 
   ngOnInit() {

@@ -1,13 +1,16 @@
-<form id="search-form" autocomplete="off" action="search" method="GET">
-  <div class="search-wrapper">
-    <ng2-completer [(ngModel)]="query" name="query" [datasource]="commonItems" 
-      [minSearchLength]="1" [placeholder]="'Search...'" 
-      [textNoResults]="'No Suggestions Found.'" [maxChars]="64" 
-      [selectOnClick]="'true'" (keyup.enter)="search()">
-    </ng2-completer>
+<br>
+<!-- If no results, display "No results found." -->
+<div *ngIf="!items || items.length === 0; else hasResults">
+  <h3 style="text-align: center; color: #2d2d2d;">No results found.</h3>
+</div>
 
-    <button type="submit" class="search-btn" (click)="search()">
-      <i class="fa fa-search"></i>
-    </button>
+<!-- Show the results if we have them -->
+<ng-template #hasResults>
+  <!-- <h3 style="text-align: center; color: #2d2d2d;">Results</h3> -->
+  <div *ngFor="let i of items">
+    <br />
+    <a routerLink="/item" routerLinkActive="active" (click)="setItem(i.id)">
+      <app-itemsmall [itemSmall]="i"></app-itemsmall>
+    </a>
   </div>
-</form>
+</ng-template>
